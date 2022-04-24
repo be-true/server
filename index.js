@@ -6,12 +6,19 @@ const controllers = {
     "test": require("./controllers/test"),
 }
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     const router = req.url.slice(1);
     const controller = controllers[router];
     if (!controller) return res.end();
+
+    // Parse body from stream
+    let buffers = [];
+    for await (let chunk of req) buffers.push(chunk);
+    const bodyString = Buffer.concat(buffers).toString();
+    const body = JSON.parse(bodyString);
+
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(controller()));
+    res.end(JSON.stringify(controller(body)));
 });
 
 const port = 3000;
