@@ -1,5 +1,7 @@
 'use strict'
+
 const http = require("http");
+const { WebSocketServer } = require('ws');
 
 const controllers = {
     "auth": require("./controllers/auth"),
@@ -20,6 +22,19 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(controller(body)));
 });
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', function connection(ws) {
+    ws.on('message', function message(data) {
+        console.log('received: %s', data);
+    });
+
+    ws.send('something');
+});
+
+setInterval(() => {
+    console.log(wss.clients.size);
+}, 3000)
 
 const port = 3000;
 const host = '127.0.0.1';
