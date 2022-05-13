@@ -1,29 +1,24 @@
 'use strict'
 
+const { app } = require("./app");
+
 const http = require("http");
-const { WebSocketServer } = require('ws');
-
-const controllers = {
-    "auth": require("./controllers/auth"),
-    "test": require("./controllers/test"),
-}
-
 const server = http.createServer(async (req, res) => {
-    const router = req.url.slice(1);
-    const controller = controllers[router];
-    if (!controller) return res.end();
-
     // Parse body from stream
     let buffers = [];
     for await (let chunk of req) buffers.push(chunk);
     const bodyString = Buffer.concat(buffers).toString();
     const body = JSON.parse(bodyString);
 
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(controller(body)));
-});
-const wss = new WebSocketServer({ server });
+    const router = req.url.slice(1);
+    const result = app.handleCommand(router, body);
 
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(result));
+});
+
+const { WebSocketServer } = require('ws');
+const wss = new WebSocketServer({ server });
 wss.on('connection', function connection(ws) {
     ws.on('message', function message(data) {
         console.log('received: %s', data);

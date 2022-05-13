@@ -4,11 +4,15 @@
   "description": "WEB server",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "metatests tests --dependentSubtests=true"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "ws": "^8.6.0"
+  },
+  "devDependencies": {
+    "metatests": "^0.8.2"
   }
 }
