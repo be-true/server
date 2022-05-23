@@ -1,9 +1,5 @@
 function ensureServiceWithDeps(name, deps = []) {
-    class func {
-        constructor() { }
-        static service() { return ({ name, deps }) }
-    }
-    return func;
+    return { name, deps };
 }
 
 module.exports = {
