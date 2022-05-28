@@ -4,7 +4,7 @@
   "description": "WEB server",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node examples/http-and-ws/index.js",
     "test": "metatests tests --dependentSubtests=true"
   },
   "author": "",
