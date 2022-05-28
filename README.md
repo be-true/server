@@ -1,3 +1,8 @@
+Задачи:
+- Добавить конфиг
+- Добавить WS
+- Парсинг body вывести в функцию
+
 Возможности:
 - Минимальное использование внешних библиотек (pg/postgres, nats, s3, rabbit, redis)
 - Независимость от транспорта (http, websocket, nats...)
@@ -30,7 +35,3 @@ class Application
 
 ExposeDriver
 + apply(app)
-
-
-Test:
-curl -X POST -d {} http://127.0.0.1:3000/test

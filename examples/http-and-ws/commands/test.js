@@ -5,7 +5,7 @@ class TestCommand extends Command {
 
     handle(params) {
         return {
-            test: ""
+            test: new Date()
         }
     }
 }
