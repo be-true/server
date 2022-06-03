@@ -5,6 +5,7 @@ class TestCommand extends Command {
 
     handle(params) {
         return {
+            params,
             test: new Date()
         }
     }

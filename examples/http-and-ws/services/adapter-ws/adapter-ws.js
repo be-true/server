@@ -20,12 +20,13 @@ class AdapterWSService {
         const { WebSocketServer } = require('ws');
         const wss = new WebSocketServer({ server: this._http });
         const logger = this._logger;
-        wss.on('connection', function connection(ws) {
-            ws.on('message', function message(data) {
-                logger.log('received: %s', data);
+        wss.on('connection', async (ws) => {
+            ws.on('message', async (buffer) => {
+                const data = JSON.parse(buffer.toString())
+                const { command, params } = data;
+                const result = await this._app.handleCommand(command, params);
+                ws.send(JSON.stringify(result));
             });
-
-            ws.send('something');
         });
 
         setInterval(() => {

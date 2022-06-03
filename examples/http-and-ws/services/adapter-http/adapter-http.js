@@ -20,11 +20,11 @@ class AdapterHttpService {
             // Parse body from stream
             let buffers = [];
             for await (let chunk of req) buffers.push(chunk);
-            const bodyString = Buffer.concat(buffers).toString();
-            const body = JSON.parse(bodyString);
+            const body = Buffer.concat(buffers).toString();
+            const params = JSON.parse(body);
 
-            const router = req.url.slice(1);
-            const result = this._app.handleCommand(router, body);
+            const command = req.url.slice(1);
+            const result = await this._app.handleCommand(command, params);
 
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(result));
