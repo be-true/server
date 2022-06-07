@@ -1,4 +1,5 @@
 const { SERVICE } = require("../names");
+const { streamToJson } = require("../../../../lib/utils/streamToJson");
 
 class AdapterHttpService {
     _app;
@@ -17,17 +18,11 @@ class AdapterHttpService {
 
     async start() {
         this._http.on('request', async (req, res) => {
-            // Parse body from stream
-            let buffers = [];
-            for await (let chunk of req) buffers.push(chunk);
-            const body = Buffer.concat(buffers).toString();
-            const params = JSON.parse(body);
-
+            const params = streamToJson(req);
             const command = req.url.slice(1);
-            const result = await this._app.handleCommand(command, params);
-
+            const response = await this._app.handleCommand(command, params);
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(result));
+            res.end(JSON.stringify(response.toJSON()));
         });
         return this;
     }
