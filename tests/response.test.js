@@ -11,9 +11,9 @@ metatests.testSync("Response: toJSON()", (test) => {
     });
 });
 
-metatests.testSync("Response: toStream()", (test) => {
+metatests.testAsync("Response: toStream()", async (test) => {
     const response = new Response({ to: "stream" });
-    test.strictEqual(streamToJson(response.toStream()), {
+    test.strictEqual(await streamToJson(response.toStream()), {
         code: 200,
         status: "Success",
         result: { to: "stream" },

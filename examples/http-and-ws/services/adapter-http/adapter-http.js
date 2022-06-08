@@ -21,8 +21,8 @@ class AdapterHttpService {
             const params = streamToJson(req);
             const command = req.url.slice(1);
             const response = await this._app.handleCommand(command, params);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(response.toJSON()));
+            res.writeHead(response.code, { 'Content-Type': 'application/json' });
+            response.toStream().pipe(res);
         });
         return this;
     }
