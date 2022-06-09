@@ -1,12 +1,8 @@
 'use_strict'
-const { Application } = require("../../lib");
+const { Application, HttpService, LoggerService, AdapterHttpService, AdapterWSService } = require("../../lib");
 const { AuthCommand } = require("./commands/auth");
 const { TestCommand } = require("./commands/test");
 const { ResponseWithCodeCommand } = require("./commands/responseWithCode");
-const { HttpService } = require("./services/http/http");
-const { LoggerService } = require("./services/logger/logger");
-const { AdapterHttpService } = require("./services/adapter-http/adapter-http");
-const { AdapterWSService } = require("./services/adapter-ws/adapter-ws");
 
 const app = new Application()
     .addCommand(new AuthCommand())
@@ -18,6 +14,4 @@ const app = new Application()
     .addService(AdapterWSService)
 ;
 
-module.exports = {
-    app
-}
+module.exports = { app };
