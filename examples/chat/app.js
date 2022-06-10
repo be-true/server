@@ -1,4 +1,5 @@
 'use_strict'
+
 const { Application, HttpService, LoggerService, AdapterHttpService, AdapterWSService } = require("../../lib");
 const { AuthCommand } = require("./commands/auth");
 const { TestCommand } = require("./commands/test");
