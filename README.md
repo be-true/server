@@ -1,9 +1,10 @@
-Задачи:
-- Добавить конфиг
-- Добавить WS
-- Парсинг body вывести в функцию
+# Задачи:
+- [ ] Сделать adapter для nats
+- [ ] Добавить в response кастомные поля
+- [ ] Оттестировать функцию streamToJson()
+- [ ] Сверстать шаблон для чат админки + добавить пустой файл для скрипта
 
-Возможности:
+# Возможности:
 - Минимальное использование внешних библиотек (pg/postgres, nats, s3, rabbit, redis)
 - Независимость от транспорта (http, websocket, nats...)
 - GateWay. Группировка API от группы серверов в один сервис
@@ -12,26 +13,32 @@
 - Логирование из коробки
 - Фоновое выполнение задач на базе postgres, rabbitMQ как в рамках одного процесса с приложением, так и как отдельный экземпляр приложения
 - Проверка данных запросов и ответов с использованием jsonSchema
-- Механизм раздачи статики, позаимствованный из метархии
+- Механизм раздачи статики, позаимствованный из metarhia
+
+# Интерфейс классов
+class Application
++ addCommand(): this
++ addService(service): this
++ getCommands(): Command[]
++ handleCommand(code, params): Response
++ start(): Promise<void>
 
 class Command
++ code;
+--------------------------
++ getDescription(): string
++ getCode(): string
++ setCode(code): this
++ setHandler(handler): this
 + handle(params): void
-+ getName(): string
-+ getDoc(): string
-+ getCode(): string
-+ validateParams(): Validator
-+ validateResult(): Validator
 
-class Event
-+ getName(): string
-+ getDoc(): string
-+ getCode(): string
-
-class Application
-+ addCommand(): void
-+ getCommandsInfo(): CommandInfo[]
-+ handleCommand(commandCode: string, params: any): any
-+ subscribeEvent(eventCode: string, (data) => any): any
-
-ExposeDriver
-+ apply(app)
+class Response
++ result
++ code
++ status
+--------------------------
++ setCode(code): this
++ setStatus(status): this
++ setResult(result): this
++ toJSON(): Object
++ toStream(): ReadableStream
