@@ -1,6 +1,5 @@
 const metatests = require("metatests");
-const { Application } = require("../lib/application");
-const { Command } = require("../lib/command");
+const { Application, Command } = require("../lib");
 
 metatests.testSync("Application: Add command", (test) => {
     const command = new Command().setCode("anyCommand").setHandler((params) => params);

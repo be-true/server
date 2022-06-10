@@ -1,6 +1,5 @@
 const metatests = require("metatests");
-const { Response } = require("../lib/response");
-const { streamToJson } = require("../lib/utils/streamToJson");
+const { Response, streamToJson } = require("../lib");
 
 metatests.testSync("Response: toJSON()", (test) => {
     const response = new Response({ key: "value" });

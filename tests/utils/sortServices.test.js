@@ -1,6 +1,6 @@
 const metatests = require("metatests");
-const { sortServices } = require("../../lib/utils/sortServices");
-const { ensureServiceWithDeps } = require("../ensure");
+const { sortServices } = require("../../lib");
+const { ensureServiceWithDeps,  } = require("../ensure");
 
 metatests.testSync("sortServices: Without deps. By alphabet ASC", (test) => {
     const services = [

@@ -1,5 +1,5 @@
 const metatests = require("metatests");
-const { Command } = require("../lib/command");
+const { Command } = require("../lib");
 
 metatests.testSync("Command: Set code", (test) => {
     const command = new Command().setCode("user/auth");
