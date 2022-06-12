@@ -1,25 +1,16 @@
 'use_strict'
 
 const http = require("http");
-const { SERVICE } = require("./_names");
+const { HttpService } = require("../../../lib");
 
-const port = 3000;
+const port = 3001;
 const host = '127.0.0.1';
 
-class HttpService {
-    _logger;
-    _server
-    static service() {
-        return {
-            name: SERVICE.http,
-            deps: [SERVICE.logger]
-        }
-    }
-
-    constructor({ logger }) {
+class HttpService2 extends HttpService {
+    constructor(di) {
+        super(di);
         this.host = host;
         this.port = port;
-        this._logger = logger;
     }
 
     async start() {
@@ -38,5 +29,5 @@ class HttpService {
 }
 
 module.exports = {
-    HttpService
+    HttpService2
 }

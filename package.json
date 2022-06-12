@@ -4,7 +4,8 @@
   "description": "WEB server",
   "main": "index.js",
   "scripts": {
-    "start": "node examples/chat",
+    "start:chat": "node examples/chat",
+    "start:game": "node examples/game",
     "test": "metatests tests --dependentSubtests=true"
   },
   "author": "",
