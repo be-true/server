@@ -45,3 +45,18 @@ class Response
 + setResult(result): this
 + toJSON(): Object
 + toStream(): ReadableStream
+
+class Client
++ app(appName): ClientApplication;
++ command(code, transport): (params, options) => Promise<Response<any>>
++ stream(code, transport): (stream, params, options) => Promise<Response<any>>
++ start(): Promise<Client>
++ stop(): Promise<void>
+
+class ClientApplication
++ command(code): (params, options) => Promise<Response<any>>
++ stream(code): (stream, params, options) => Promise<Response<any>>
+
+interface ITransport
++ command(code, params, options)
++ stream(code, stream, params, options)
