@@ -1,6 +1,4 @@
 # Задачи:
-- [ ] Описать интерфейсы для Gate
-- [ ] Придумать как конфигурировать HttpService2
 - [ ] Описать запуск нескольких приложений
 - [ ] Описать в документации что такое сервис и как он вызывается
 - [ ] Убрать из экспорта библиотеки utils
@@ -23,11 +21,14 @@
 
 # Интерфейс классов
 class Application
-+ addCommand(): this
++ addCommand(command): this
 + addService(service): this
 + getCommands(): Command[]
 + handleCommand(code, params): Response
 + start(): Promise<void>
+
+class Gate extends Application
++ proxyCommands(appName, commandNames): this
 
 class Command
 + code;
