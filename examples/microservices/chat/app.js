@@ -1,6 +1,6 @@
 'use_strict'
 
-const { Application, LoggerService } = require("../../lib");
+const { Application, LoggerService } = require("../../../lib");
 const { AuthCommand } = require("./commands/auth");
 const { TestCommand } = require("./commands/test");
 const { ResponseWithCodeCommand } = require("./commands/responseWithCode");

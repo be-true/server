@@ -1,5 +1,5 @@
 'use_strict'
-const { Client } = require("../../lib")
+const { Client } = require("../../../lib")
 
 class ClientService extends Client {
     static service() {

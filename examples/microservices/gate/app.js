@@ -1,6 +1,6 @@
 'use_strict'
 
-const { Gate, HttpService, LoggerService, AdapterHttpService, AdapterWSService } = require("../../lib");
+const { Gate, HttpService, LoggerService, AdapterHttpService, AdapterWSService } = require("../../../lib");
 
 const app = new Gate()
     .addService(LoggerService)

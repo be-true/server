@@ -1,7 +1,7 @@
 'use_strict'
 
 const http = require("http");
-const { HttpService } = require("../../../lib");
+const { HttpService } = require("../../../../lib");
 
 const port = 3001;
 const host = '127.0.0.1';

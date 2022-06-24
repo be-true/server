@@ -1,4 +1,4 @@
-const { Command } = require("../../../lib");
+const { Command } = require("../../../../lib");
 
 class AuthCommand extends Command {
     code = "user/auth";
