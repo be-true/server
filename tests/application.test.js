@@ -1,10 +1,10 @@
 const metatests = require("metatests");
 const { Application, Command } = require("../lib");
 
-metatests.testSync("Application: Add command", (test) => {
+metatests.testAsync("Application: Add command", async (test) => {
     const command = new Command().setCode("anyCommand").setHandler((params) => params);
     const app = new Application().addCommand(command);
-    const response = app.handleCommand("anyCommand", { any: 123 })
+    const response = await app.handleCommand("anyCommand", { any: 123 })
     test.strictEqual(response.toJSON(), { 
         code: 200,
         status: "Success",
@@ -12,10 +12,10 @@ metatests.testSync("Application: Add command", (test) => {
     })
 });
 
-metatests.testSync("Application: Error. Not find command", (test) => {
+metatests.testAsync("Application: Error. Not find command", async (test) => {
     const app = new Application();
     try {
-        app.handleCommand("anyCommand", {})
+        await app.handleCommand("anyCommand", {})
         test.strictEqual(1, 0)
     } catch (e) {
         test.strictEqual(1, 1)
