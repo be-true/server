@@ -20,3 +20,14 @@ metatests.testSync("sortServices: With deps", (test) => {
     const sorted = sortServices(services).map(i => i.name);
     test.strictEqual(['B', 'A', 'C'], sorted);
 });
+
+metatests.testSync("sortServices: With deps 2", (test) => {
+    const services = [
+        ensureServiceWithDeps("logger"),
+        ensureServiceWithDeps("http", ["logger"]),
+        ensureServiceWithDeps("httpAdapter", ["http"]),
+        ensureServiceWithDeps("wsAdapter", ["http", "logger"]),
+    ];
+    const sorted = sortServices(services).map(i => i.name);
+    test.strictEqual(['logger', 'http', 'httpAdapter', 'wsAdapter'], sorted);
+});
