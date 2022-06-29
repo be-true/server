@@ -7,6 +7,7 @@ const app = new Gate()
     .addService(HttpService)
     .addService(AdapterHttpService)
     .addService(AdapterWSService)
+    .proxyCommands("game", ["load"])
 ;
 
 module.exports = { app };
