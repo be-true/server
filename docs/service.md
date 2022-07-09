@@ -4,7 +4,7 @@
 
 Сервис - это любой класс, для которого указана следующая конфигурация:
 
-- name - Имя сервиса на латинице в CamelCase c маленькой буквы. По этому имени будет храниться экземпляр сервиса в DI приложения
+- name - Имя сервиса на латинице в camelCase. По этому имени будет храниться экземпляр сервиса в DI приложения
 - deps [Опционально] - Массив имен сервисов от которого зависит текущий
 - config [Опционально] - JSON конфигурация или экземпляр класса библиотеки @be-true/config
 
@@ -36,16 +36,22 @@ class EmailSender {
     static service() {
         return { 
             name: "emailSender",
-            deps: ["logger"]
+            deps: ["logger"],
+            config: {
+                smtpHost: 'https://any.domain',
+                smtpPort: 321,
+            }
          }
     }
 
-    constructor({ logger }) {
+    constructor({ logger }, config) {
         this.logger = logger
+        this.config = config;
     }
 
     async start() {
         // Выполнение какой-то асинхронной операции
+        // c использованием this.config
         // необходимой для старта
         return this;
     }
