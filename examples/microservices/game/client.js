@@ -5,15 +5,15 @@ class ClientService extends Client {
     static service() {
         return {
             name: 'client',
-            deps: ['transport']
+            deps: ['transportChat']
         }
     }
 
-    constructor({ transport }) {
+    constructor({ transportChat }) {
         super();
 
         this.chat = {
-            userAuth: this.command("user/auth", transport),
+            userAuth: this.command("user/auth", transportChat),
         };
     }
 }
