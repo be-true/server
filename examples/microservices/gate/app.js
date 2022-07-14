@@ -5,13 +5,12 @@ const { Gate, HttpService, LoggerService, AdapterHttpService, AdapterWSService, 
 const app = new Gate()
     .addService(LoggerService)
     .addService(HttpService, { config: { port: 3000 }})
-    .addService(HttpTransport)
     .addService(HttpTransport, { name: 'transportGame', config: { port: 3001 } })
     .addService(HttpTransport, { name: 'transportChat', config: { port: 3002 } })
-    .addClient(Client)
     .addService(AdapterHttpService)
     .addService(AdapterWSService)
-    .proxyCommands("game", ["load"])
+    .addClient(Client, { deps: ['transportGame', 'transportChat'] })
+    .proxyCommands("game", ["load"], { transport: 'transportGame' })
 ;
 
 module.exports = { app };
