@@ -3,7 +3,7 @@
 const { Gate, HttpService, LoggerService, AdapterHttpService, AdapterWSService, Client, HttpTransport } = require("../../../lib");
 
 const app = new Gate()
-    .addService(LoggerService)
+    .addService(LoggerService, { config: { pretty: true } })
     .addService(HttpService, { config: { port: 3000 }})
     .addService(HttpTransport, { name: 'transportGame', config: { port: 3001 } })
     .addService(HttpTransport, { name: 'transportChat', config: { port: 3002 } })

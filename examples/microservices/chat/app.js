@@ -6,12 +6,12 @@ const { TestCommand } = require("./commands/test");
 const { ResponseWithCodeCommand } = require("./commands/responseWithCode");
 
 const app = new Application()
+    .addService(LoggerService, { config: { pretty: true } })
     .addCommand(new AuthCommand())
     .addCommand(new TestCommand())
     .addCommand(new ResponseWithCodeCommand())
     .addService(HttpService, { config: { port: 3002 }})
     .addService(AdapterHttpService)
-    .addService(LoggerService)
 ;
 
 module.exports = { app };
