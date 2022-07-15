@@ -1,17 +1,6 @@
 const metatests = require("metatests");
 const { Gate, Client } = require("../lib");
-
-class TransportEcho {
-    static service() {
-        return {
-            name: 'transport',
-        }
-    }
-
-    async command(code, params, options) {
-        return params;
-    }
-}
+const { TransportEcho } = require("./_helpers/transport-echo");
 
 metatests.testAsync("Gate: proxy command", async (test) => {
     const gate = new Gate()

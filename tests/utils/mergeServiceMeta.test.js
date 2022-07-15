@@ -44,7 +44,6 @@ metatests.testSync("mergeServiceMeta: from override", (test) => {
     const merged = mergeServiceMeta(defaulted, meta, override);
     test.strictEqual(merged.name, override.name);
     test.strictEqual(merged.deps, override.deps);
-    console.log(merged.config);
     test.strictEqual(merged.config, {
         param1: -1,
         param2: 2,
