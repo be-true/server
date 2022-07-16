@@ -18,7 +18,7 @@ metatests.testSync("Logger: Info with addition params", async (test) => {
 metatests.testSync("Logger: pretty", async (test) => {
     const logger = new LoggerTest(null, { pretty: true });
     logger.info({ param: 'one', param2: 'two' }, "Test message");
-    const result = `[INFO]:   2022-01-01T00:00:00.000Z - Test message\n` +
+    const result = `[INFO]:   00:00:00.000 - Test message\n` +
                    `          param: one\n` + 
                    `          param2: two`
     test.strictEqual(logger.logs[0], result);
