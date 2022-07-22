@@ -10,7 +10,7 @@ class LoggerTest extends LoggerService {
         if (this.config.pretty) {
             this.logs.push(this._pretty(params));
         } else {
-            this.logs.push(JSON.stringify(_params));
+            this.logs.push(_params);
         }
     }
 }

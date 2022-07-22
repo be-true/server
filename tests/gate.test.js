@@ -1,9 +1,10 @@
 const metatests = require("metatests");
-const { Gate, Client } = require("../lib");
+const { Gate, Client, LoggerService } = require("../lib");
 const { TransportEcho } = require("./_helpers/transport-echo");
 
 metatests.testAsync("Gate: proxy command", async (test) => {
     const gate = new Gate()
+        .addService(LoggerService, { config: { level: 'silent' } })
         .addService(Client)
         .addService(TransportEcho)
         .addService(TransportEcho, { name: 'transportApp2' })

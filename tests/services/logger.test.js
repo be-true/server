@@ -23,3 +23,29 @@ metatests.testSync("Logger: pretty", async (test) => {
                    `          param2: two`
     test.strictEqual(logger.logs[0], result);
 });
+
+metatests.testSync("Logger: level error", async (test) => {
+    const logger = new LoggerTest(null, { level: 'error' });
+    logger.info("Info message");
+    logger.error("Error message");
+
+    test.strictEqual(logger.logs.length, 1) 
+    test.strictEqual(logger.logs[0].msg, 'Error message') 
+});
+
+metatests.testSync("Logger: level silent", async (test) => {
+    const logger = new LoggerTest(null, { level: 'silent' });
+    logger.info("Info message");
+    logger.error("Error message");
+
+    test.strictEqual(logger.logs.length, 0) 
+});
+
+metatests.testSync("Logger: level ERROR as upper case", async (test) => {
+    const logger = new LoggerTest(null, { level: 'ERROR' });
+    logger.info("Info message");
+    logger.error("Error message");
+
+    test.strictEqual(logger.logs.length, 1) 
+    test.strictEqual(logger.logs[0].msg, 'Error message') 
+});
