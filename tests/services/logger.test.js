@@ -49,3 +49,17 @@ metatests.testSync("Logger: level ERROR as upper case", async (test) => {
     test.strictEqual(logger.logs.length, 1) 
     test.strictEqual(logger.logs[0].msg, 'Error message') 
 });
+
+metatests.testSync("Logger: default level", (test) => {
+    const logger = new LoggerTest();
+    logger.info("Info message");
+    test.strictEqual(logger.logs.length, 1) 
+});
+
+metatests.testSync("Logger: setParams", (test) => {
+    const logger = new LoggerTest();
+    logger.setParams({ requestId: 123 });
+    logger.info("Info message");
+    test.strictEqual(logger.logs.length, 1) 
+    test.strictEqual(logger.logs[0].requestId, 123) 
+});
