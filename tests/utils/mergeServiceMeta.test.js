@@ -1,7 +1,7 @@
 const metatests = require("metatests");
 const { mergeServiceMeta } = require("../../lib/utils");
 
-const defaulted = { serviceClass: class {} };
+const defaulted = { service: class {} };
 const meta = {
     name: 'serviceName',
     deps: ['service1', 'service2'],
@@ -13,13 +13,13 @@ const override = {
     config: { param1: -1, param3: 3 },
 }
 
-metatests.testSync("mergeServiceMeta: required serviceClass params", (test) => {
+metatests.testSync("mergeServiceMeta: required 'service' params", (test) => {
     try {
         mergeServiceMeta();
         test.strictEqual(false, true);
     } catch (e) {
         test.strictEqual(e instanceof Error, true);
-        test.strictEqual(e.message, 'Необходимо передать поле serviceClass в переменной defaulted');
+        test.strictEqual(e.message, "Необходимо передать поле 'service' в переменной defaulted");
     }
 });
 
@@ -49,4 +49,9 @@ metatests.testSync("mergeServiceMeta: from override", (test) => {
         param2: 2,
         param3: 3,
     });
+});
+
+metatests.testSync("mergeServiceMeta: as value", (test) => {
+    const merged = mergeServiceMeta({ service: 42 }, { }, { name: 'answer', as: 'value' });
+    test.strictEqual(merged.create({}, {}), 42);
 });

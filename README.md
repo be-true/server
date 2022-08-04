@@ -4,7 +4,8 @@
 - [ ] Возможность регистрировать в DI значения 
 - [ ] Добавить зависимость logger-у от user и request
 - [ ] Пробрасывать headers в handle приложения 
-- [ ] Внутри request будет переменная requestId полученная из headers как x-request-id 
+- [ ] Внутри request будет переменная requestId полученная из headers как x-trace-id 
+- [ ] Пробросить traceId по цепочке через client
 
 # Возможности:
 - Минимальное использование внешних библиотек (pg/postgres, nats, s3, rabbit, redis)
