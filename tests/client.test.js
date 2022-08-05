@@ -5,17 +5,17 @@ const emptyTransport = {
     command: () => {}
 }
 
-metatests.testSync("Client: resterCommand()", (test) => {
+metatests.testSync("Client: resetterCommand()", (test) => {
     const client = new Client();
-    client.resterCommand('app', 'commandCode', emptyTransport);
+    client.resetterCommand('app', 'commandCode', emptyTransport);
     const has = client['app'] !== undefined && client['app']['commandCode'] !== undefined;
     test.strictEqual(has, true);
 });
 
-metatests.testSync("Client: resterCommand(). Несколько команд", (test) => {
+metatests.testSync("Client: resetterCommand(). Несколько команд", (test) => {
     const client = new Client();
-    client.resterCommand('app', 'commandCode', emptyTransport);
-    client.resterCommand('app', 'commandCode2', emptyTransport);
+    client.resetterCommand('app', 'commandCode', emptyTransport);
+    client.resetterCommand('app', 'commandCode2', emptyTransport);
     const has1 = client['app'] !== undefined && client['app']['commandCode'] !== undefined;
     const has2 = client['app'] !== undefined && client['app']['commandCode2'] !== undefined;
     test.strictEqual(has1, true);
