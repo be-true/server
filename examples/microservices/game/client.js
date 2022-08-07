@@ -1,19 +1,20 @@
 'use_strict'
+
 const { Client } = require("../../../lib")
 
 class ClientService extends Client {
     static service() {
         return {
             name: 'client',
-            deps: ['transportChat']
+            deps: ['transportChat'],
+            scope: 'request',
         }
     }
 
-    constructor({ transportChat }) {
-        super();
-
+    constructor(di) {
+        super(di);
         this.chat = {
-            userAuth: this.command("user/auth", transportChat),
+            userAuth: this.command("user/auth", di.transportChat),
         };
     }
 }
