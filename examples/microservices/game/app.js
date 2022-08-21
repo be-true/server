@@ -1,6 +1,6 @@
 'use_strict'
 
-const { Application, LoggerService, HttpTransport, AdapterHttpService, HttpService } = require("../../../lib");
+const { Application, LoggerService, HttpTransport, AdapterHttpService, HttpService } = require("@be-true/server");
 const { LoadCommand } = require("./commands/load");
 const { ClientService } = require("./client");
 

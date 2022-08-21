@@ -1,4 +1,4 @@
-const { Command, Response } = require("../../../../lib");
+const { Command, Response } = require("@be-true/server");
 
 class ResponseWithCodeCommand extends Command {
     code = "responseWithCode";

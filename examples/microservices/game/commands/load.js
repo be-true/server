@@ -1,4 +1,4 @@
-const { Command } = require("../../../../lib");
+const { Command } = require("@be-true/server");
 
 class LoadCommand extends Command {
     code = "load";
