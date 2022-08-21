@@ -1,14 +1,18 @@
 {
   "name": "microservices",
   "version": "1.0.0",
-  "description": "- Вызов метода load у сервиса chat через Gate: curl -X POST -d {} -v http://127.0.0.1:3000/chat/load",
+  "description": "Пример использования библиотеки @be-true/server для микросервисов",
+  "author": "eawapownikov@gmail.com",
+  "license": "ISC",
   "main": "index.js",
+  "workspaces": ["chat", "game", "gate", "lib_server"],
   "scripts": {
     "start:gate": "node ./gate",
     "start:game": "node ./game",
     "start:chat": "node ./chat",
-    "test": "node ./test.js"
-  },
-  "author": "",
-  "license": "ISC"
+    "test": "node ./test.js",
+    "build": "npm run build:cp && npm run build:gate",
+    "build:cp": "rm -rf ./lib_server && cp -r ../../lib ./lib_server && cp ../../package.json ./lib_server/package.json",
+    "build:gate": "docker build -t server_ms_gate:0.0.1 -f ./gate/Dockerfile ."
+  }
 }
