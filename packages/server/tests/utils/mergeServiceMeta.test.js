@@ -1,5 +1,5 @@
 const metatests = require("metatests");
-const { mergeServiceMeta } = require("../../lib/utils");
+const { mergeServiceMeta } = require("../../../server/utils");
 
 const defaulted = { service: class {} };
 const meta = {

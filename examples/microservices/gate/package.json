@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "description": "Gate",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@be-true/ws": "^0.0.1"
+  }
 }

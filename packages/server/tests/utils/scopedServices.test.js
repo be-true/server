@@ -1,5 +1,5 @@
 const metatests = require("metatests");
-const { scopedServices } = require("../../lib/utils");
+const { scopedServices } = require("../../../server/utils");
 
 metatests.testSync("scopedServices", (test) => {
     const services = [

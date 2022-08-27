@@ -1,5 +1,5 @@
 const metatests = require("metatests");
-const { Application, Command, LoggerService, Client } = require("../lib");
+const { Application, Command, LoggerService, Client } = require("../../server");
 const { TransportEcho } = require("./_helpers/transport-echo");
 
 metatests.testAsync("Application: Add command", async (test) => {
