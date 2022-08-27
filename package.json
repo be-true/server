@@ -6,8 +6,9 @@
   "scripts": {
     "test": "metatests tests --dependentSubtests=true"
   },
-  "author": "",
+  "author": "eawapownikov@gmail.com",
   "license": "MIT",
+  "workspaces": ["packages/*"],
   "dependencies": {
     "ws": "^8.6.0"
   },

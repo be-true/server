@@ -1,4 +1,4 @@
-FROM node:16.17.0-alpine3.16
+FROM cr.yandex/crpjm5kdvh71hdgvosib/node:16-alpine
 WORKDIR /app
 COPY ./lib_server ./lib_server
 COPY ./package.json ./package-lock.json ./

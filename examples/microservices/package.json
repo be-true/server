@@ -5,14 +5,14 @@
   "author": "eawapownikov@gmail.com",
   "license": "ISC",
   "main": "index.js",
-  "workspaces": ["chat", "game", "gate", "lib_server"],
+  "workspaces": ["chat", "game", "gate", "lib_server/*"],
   "scripts": {
     "start:gate": "node ./gate",
     "start:game": "node ./game",
     "start:chat": "node ./chat",
     "test": "node ./test.js",
     "build": "npm run build:cp && npm run build:gate && npm run build:chat && npm run build:game",
-    "build:cp": "rm -rf ./lib_server && cp -r ../../lib ./lib_server && cp ../../package.json ./lib_server/package.json",
+    "build:cp": "rm -rf ./lib_server && cp -r ../../packages ./lib_server",
     "build:gate": "docker build -t server_ms_gate:0.0.1 -f ./gate/Dockerfile .",
     "build:chat": "docker build -t server_ms_chat:0.0.1 -f ./chat/Dockerfile .",
     "build:game": "docker build -t server_ms_game:0.0.1 -f ./game/Dockerfile ."
