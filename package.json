@@ -1,17 +1,11 @@
 {
-  "name": "@be-true/server",
+  "name": "@be-true",
   "version": "0.0.1",
-  "description": "WEB server",
-  "main": "index.js",
-  "scripts": {
-    "test": "metatests tests --dependentSubtests=true"
-  },
+  "description": "Be-true stack",
   "author": "eawapownikov@gmail.com",
   "license": "MIT",
   "workspaces": ["packages/*"],
-  "dependencies": {
-    "ws": "^8.6.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "metatests": "^0.8.2"
   }

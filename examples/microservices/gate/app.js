@@ -1,6 +1,7 @@
 'use_strict'
 
-const { Application, HttpService, LoggerService, AdapterHttpService, AdapterWSService, Client, HttpTransport } = require("@be-true/server");
+const { Application, HttpService, LoggerService, AdapterHttpService, Client, HttpTransport } = require("@be-true/server");
+const { AdapterWSService } = require("@be-true/ws");
 
 const app = new Application()
     .addService(LoggerService, { config: { pretty: true } })
