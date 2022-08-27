@@ -1,14 +1,15 @@
 {
   "name": "@be-true/ws",
   "version": "0.0.1",
-  "description": "Работа с WebScoket-ами",
+  "description": "Работа с WebSocket-ами",
   "main": "index.js",
   "scripts": {
     "test": "metatests tests --dependentSubtests=true"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/be-true/server.git"
+    "url": "git+https://github.com/be-true/server.git",
+    "directory": "packages/ws"
   },
   "keywords": [
     "ws",

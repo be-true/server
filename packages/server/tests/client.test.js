@@ -1,5 +1,5 @@
 const metatests = require("metatests");
-const { Client } = require("../../server/client");
+const { Client } = require("../client");
 
 const emptyTransport = {
     command: () => {}

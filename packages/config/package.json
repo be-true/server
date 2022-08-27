@@ -1,12 +1,8 @@
 {
-  "name": "@be-true/server",
+  "name": "@be-true/config",
   "version": "0.0.1",
-  "description": "Server for applications",
+  "description": "Система конфигурации",
   "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
-  },
   "devDependencies": {},
   "scripts": {
     "test": "metatests tests --dependentSubtests=true"
@@ -14,8 +10,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/be-true/server.git",
-    "directory": "packages/server"
+    "directory": "packages/config"
   },
+  "keywords": [
+    "config",
+    "be-true"
+  ],
   "author": "eawapownikov@gmail.com",
   "license": "MIT",
   "bugs": {

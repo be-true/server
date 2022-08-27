@@ -1,4 +1,4 @@
-const { LoggerService } = require("../../../server");
+const { LoggerService } = require("../..");
 
 class LoggerTest extends LoggerService {
     logs = [];
