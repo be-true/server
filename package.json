@@ -4,8 +4,12 @@
   "description": "Be-true stack",
   "author": "eawapownikov@gmail.com",
   "license": "MIT",
-  "workspaces": ["packages/*"],
-  "dependencies": {},
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  },
   "devDependencies": {
     "metatests": "^0.8.2"
   },

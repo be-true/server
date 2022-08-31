@@ -1,3 +1,3 @@
 module.exports = {
-    ConfigBase:  require("./ConfigBase").ConfigBase
+    Config:  require("./Config").Config
 };

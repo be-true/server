@@ -7,7 +7,6 @@
     "doc": "docs",
     "test": "tests"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "metatests tests --dependentSubtests=true"
   },
@@ -21,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/be-true/server/issues"
   },
-  "homepage": "https://github.com/be-true/server#readme"
+  "homepage": "https://github.com/be-true/server#readme",
+  "dependencies": {
+    "@be-true/config": "^0.0.1"
+  }
 }

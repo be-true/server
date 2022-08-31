@@ -1,6 +1,25 @@
 'use_strict'
 
 const http = require("http");
+const { Config } = require("@be-true/config");
+
+class HttpConfig extends Config {
+    context = 'WEB сервер';
+    constructor() {
+        super();
+        this.host = this.param('host')
+            .default('127.0.0.1')
+            .description('HOST WEB сервера')
+            .required()
+            .asString();
+            
+        this.port = this.param('port')
+            .default(3000)
+            .description('Port WEB сервера')
+            .required()
+            .asInteger();
+    }
+}
 
 class HttpService {
     _logger;
@@ -10,16 +29,13 @@ class HttpService {
             name: "http",
             deps: ["logger"],
             scope: 'singleton',
-            config: { 
-                host: '127.0.0.1',
-                port: 3000,
-            }
+            config: new HttpConfig()
         }
     }
 
     constructor({ logger }, config) {
         this._logger = logger;
-        this._config = config;
+        this._config = config ?? new HttpConfig();
     }
 
     async start() {

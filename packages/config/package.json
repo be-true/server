@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Система конфигурации",
   "main": "index.js",
-  "devDependencies": {},
+  "types": "types/config.d.ts",
   "scripts": {
     "test": "metatests tests --dependentSubtests=true"
   },

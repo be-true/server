@@ -1,4 +1,5 @@
 'use_strict'
+const { Config } = require("@be-true/config");
 
 function mergeServiceMeta(defaulted = {}, meta = {}, override = {}) {
     const mergedMeta = Object.assign({}, meta, override);
@@ -14,8 +15,10 @@ function mergeServiceMeta(defaulted = {}, meta = {}, override = {}) {
                 : new defaulted.service(di, config);
         };
     }
-    
-    const config = Object.assign({}, meta.config ?? {}, override.config ?? {});
+
+    const configOverride = Config.from(override.config);
+    const config = Config.from(meta.config).merge(configOverride);
+
     return Object.assign({}, defaulted, mergedMeta, { config });
 }
 
