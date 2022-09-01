@@ -1,43 +1,34 @@
-export interface Accessors<isRequired = undefined> {
+export interface ConfigItem<isRequired = undefined> {
     fromEnv(env: string): this;
     description(text: string): this;
     example(text: string): this;
     override(value: any): this;
+    hasError(): boolean;
+    splitter(splitter: string): this;
+    enum(list: any[]): this;
     asString(): isRequired extends undefined? string | undefined : string ;
     asInteger(): isRequired extends undefined? number | undefined : number ;
     asBoolean(): isRequired extends undefined? boolean | undefined : boolean ;
     asUrl(): isRequired extends undefined? string | undefined : string ;
-    asEnum(listValues: string[]): isRequired extends undefined? string | undefined : string ;
+    asArrayString(): isRequired extends undefined? string[] | undefined : string[] ;
+    asArrayInteger(): isRequired extends undefined? number[] | undefined : number[] ;
+    asArrayBoolean(): isRequired extends undefined? boolean[] | undefined : boolean[] ;
+    asArrayUrl(): isRequired extends undefined? string[] | undefined : string[] ;
 }
 
-export interface AccessorsOption extends Accessors {
-    default(value: any): AccessorsRequired;
-    required(): AccessorsRequired;
+export interface ConfigItemOption extends ConfigItem {
+    default(value: any): ConfigItemRequired;
+    required(): ConfigItemRequired;
 }
 
-export interface AccessorsRequired extends Accessors<true> {
+export interface ConfigItemRequired extends ConfigItem<true> {
     default(value: any): this;
     required(): this;
 }
 
-export declare class ConfigItem implements AccessorsOption {
-    constructor();
-    description(text: string): this;
-    example(text: string): this;
-    override(value: any): this;
-    fromEnv(env: string): this;
-    default(value: any): AccessorsRequired;
-    required(): AccessorsRequired;
-    asString(): string | undefined;
-    asInteger(): number | undefined;
-    asBoolean(): boolean | undefined;
-    asUrl(): string | undefined;
-    asEnum(listValues: string[]): string | undefined;
-}
-
 export declare class Config {
     static from(json?: any): Config;
-    param(name: string): AccessorsOption;
+    param(name: string): ConfigItemOption;
     override(name: string, value: any): this;
     merge(config: Config): this;
 }
