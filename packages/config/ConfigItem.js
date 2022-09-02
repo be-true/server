@@ -84,10 +84,6 @@ class ConfigItem {
     return this.#error !== undefined;
   }
 
-  enum(list) {
-    this.#enum = list;
-  }
-
   asString() {
     this.#setChain(
       [split(this.#splitter), this.#isArray],

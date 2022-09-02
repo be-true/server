@@ -5,7 +5,12 @@
   "author": "eawapownikov@gmail.com",
   "license": "ISC",
   "main": "index.js",
-  "workspaces": ["chat", "game", "gate", "lib_server/*"],
+  "workspaces": [
+    "chat",
+    "game",
+    "gate",
+    "lib_server/*"
+  ],
   "scripts": {
     "start:gate": "node ./gate",
     "start:game": "node ./game",

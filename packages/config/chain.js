@@ -1,7 +1,8 @@
-const required = (items) => {
+const required = (value) => {
     if (value === undefined || value === null) {
         throw new Error('Параметр обязательный для заполнения')
     }
+    return value;
 }
 
 const parseInteger = (value) => {
