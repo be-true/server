@@ -1,18 +1,36 @@
 const http = require("http");
+const { Config } = require('@be-true/config');
+
+class HttpTransportConfig extends Config {
+    context = 'HTTP транспорт до HTTPAdapter-а';
+    constructor() {
+        super();
+        this.hostname = this.param('host')
+            .default('127.0.0.1')
+            .fromEnv('HTTP_TRANSPORT_HOST')
+            .description('HOST WEB сервера к которому идет подключение')
+            .required()
+            .asString();
+            
+        this.port = this.param('port')
+            .default(3000)
+            .fromEnv('HTTP_TRANSPORT_PORT')
+            .description('Port WEB сервера к которому идет подключение')
+            .required()
+            .asInteger();
+    }
+}
 
 class HttpTransport {
     static service() {
         return {
             name: 'transport',
-            config: {
-                hostname: "127.0.0.1",
-                port: 3001,
-            }
+            config: new HttpTransportConfig()
         }
     }
 
     constructor(_, config) {
-        this._config = config;
+        this._config = config ?? new HttpTransportConfig();
     }
 
     command(code, params, headers) {

@@ -10,14 +10,20 @@ const parseInteger = (value) => {
 }
 
 const parseBoolean = (value) => {
-    const _value = value.toLowerCase();
-    switch(_value) {
-        case '0':
-        case 'false':
-            return false;
-        case '1':
-        case 'true':
-            return true;
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'number') {
+        if (value === 1) return true;
+        if (value === 0) return false;
+    }
+    if (typeof value === 'string') {
+        switch(value.toLowerCase()) {
+            case '0':
+            case 'false':
+                return false;
+            case '1':
+            case 'true':
+                return true;
+        }
     }
 
     throw new Error('Не допустимое значение для boolean')

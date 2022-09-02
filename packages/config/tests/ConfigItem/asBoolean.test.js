@@ -8,6 +8,20 @@ metatests.testAsync("ConfigItem:#asBoolean required", async (test) => {
     test.strictEqual(item.hasError(), true);
 });
 
+metatests.testAsync("ConfigItem:#asBoolean передано как true", async (test) => {
+    const item = new ConfigItem();
+    item.default(true).asBoolean()
+    test.strictEqual(item.get(), true);
+    test.strictEqual(item.hasError(), false);
+});
+
+metatests.testAsync("ConfigItem:#asBoolean передано как 1", async (test) => {
+    const item = new ConfigItem();
+    item.default(true).asBoolean()
+    test.strictEqual(item.get(), true);
+    test.strictEqual(item.hasError(), false);
+});
+
 metatests.testAsync("ConfigItem:#asBoolean передано как 'true'", async (test) => {
     const item = new ConfigItem();
     item.default('true').asBoolean()
@@ -33,6 +47,20 @@ metatests.testAsync("ConfigItem:#asBoolean передано как '1'", async (
     const item = new ConfigItem();
     item.default('1').asBoolean()
     test.strictEqual(item.get(), true);
+    test.strictEqual(item.hasError(), false);
+});
+
+metatests.testAsync("ConfigItem:#asBoolean передано как false", async (test) => {
+    const item = new ConfigItem();
+    item.default(false).asBoolean();
+    test.strictEqual(item.get(), false);
+    test.strictEqual(item.hasError(), false);
+});
+
+metatests.testAsync("ConfigItem:#asBoolean передано как 0", async (test) => {
+    const item = new ConfigItem();
+    item.default(0).asBoolean();
+    test.strictEqual(item.get(), false);
     test.strictEqual(item.hasError(), false);
 });
 

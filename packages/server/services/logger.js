@@ -1,5 +1,7 @@
 'use_strict'
 
+const { Config } = require('@be-true/config');
+
 const LEVEL_TRACE = 10;
 const LEVEL_DEBUG = 20;
 const LEVEL_INFO = 30;
@@ -28,26 +30,47 @@ const nameToLevel = {
     "SILENT": LEVEL_SILENT,
 }
 
+class LoggerConfig extends Config {
+    context = 'HTTP транспорт до HTTPAdapter-а';
+    constructor() {
+        super();
+        this.pretty = this.param('pretty')
+            .default(false)
+            .fromEnv('LOG_PRETTY')
+            .description('Отображать логи в человеко понятном формате')
+            .required()
+            .asBoolean()
+            
+        const levelEnum = [
+            ...Object.values(levelToName).map(i => i.toLowerCase()),
+            ...Object.values(nameToLevel)
+        ];
+        this.level = this.param('level')
+            .default('info')
+            .fromEnv('LOG_LEVEL')
+            .description('Уровень отображения логов')
+            .required()
+            .asEnum(levelEnum);
+    }
+}
+
 class LoggerService {
+    _params = {};
+
     static service() {
         return {
             name: "logger",
-            config: {
-                pretty: false,
-                level: 'info'
-            }
+            config: new LoggerConfig()
         }
     }
 
-    _params = {};
-
     constructor(_, config) {
-        const _config = config ?? LoggerService.service().config;
-        const level = nameToLevel[_config?.level.toUpperCase() ?? 'INFO'];
-        this.config = {
-            ..._config,
-            level
-        };
+        this.config = config ?? new LoggerConfig();
+        // Если уровень задан текстовым значением, то переводим его в числовое для удобства фильтрации
+        if (typeof this.config.level === 'string') {
+            const level = nameToLevel[this.config.level.toUpperCase() ?? 'INFO'];
+            this.config.override('level', level);
+        }
     }
 
     setParams(params) {
