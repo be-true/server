@@ -8,7 +8,7 @@ metatests.testAsync("ConfigItem: Кэш после override должен ски�
     test.strictEqual(item.get(), 10);
 });
 
-metatests.testAsync("ConfigItem: Кэш после override должен скинуться", async (test) => {
+metatests.testAsync("ConfigItem: Кэш после asInteger должен скинуться", async (test) => {
     const item = new ConfigItem();
     item.default('0').get()
     item.asInteger();
