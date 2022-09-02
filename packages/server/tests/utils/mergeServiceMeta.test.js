@@ -37,18 +37,12 @@ metatests.testSync("mergeServiceMeta: from meta", (test) => {
     const merged = mergeServiceMeta(defaulted, meta, {});
     test.strictEqual(merged.name, meta.name);
     test.strictEqual(merged.deps, meta.deps);
-    test.strictEqual(merged.config, meta.config);
 });
 
 metatests.testSync("mergeServiceMeta: from override", (test) => {
     const merged = mergeServiceMeta(defaulted, meta, override);
     test.strictEqual(merged.name, override.name);
     test.strictEqual(merged.deps, override.deps);
-    test.strictEqual(merged.config, {
-        param1: -1,
-        param2: 2,
-        param3: 3,
-    });
 });
 
 metatests.testSync("mergeServiceMeta: as value", (test) => {
