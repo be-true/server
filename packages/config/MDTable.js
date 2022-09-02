@@ -1,28 +1,36 @@
 const defaultOptions = {};
 
 class MDTable {
-    columns = [];
-    columnWidth = new Map();
-    options = {};
+    #columns = [];
+    #columnWidth = new Map();
+    #options = {};
 
     constructor(data, options) {
-        this.options = {
+        this.#options = {
             ...options,
             ...defaultOptions
         };
         this.data = data;
 
-        this.init();
+        this.#init();
     }
 
-    init() {
-        this._makeColumns();
-        this._calcColumnWidth();
+    toString() {
+        return [
+            this.#renderHeader(),
+            this.#renderHeaderSplit(),
+            ...this.data.map((item) => this.#renderRow(item)),
+        ].join("\n");
     }
 
-    _makeColumns() {
-        if (this.options.columns !== undefined) {
-            this.columns = this.options.columns;
+    #init() {
+        this.#makeColumns();
+        this.#calcColumnWidth();
+    }
+
+    #makeColumns() {
+        if (this.#options.columns !== undefined) {
+            this.#columns = this.#options.columns;
             return;
         }
 
@@ -32,15 +40,15 @@ class MDTable {
                 columns.add(key);
             })
         })
-        this.columns = [...columns];
+        this.#columns = [...columns];
     }
 
-    _calcColumnWidth() {
+    #calcColumnWidth() {
         const result = new Map();
 
         // Add header to data fot calculate length
         const headerData = {};
-        this.columns.forEach(i => headerData[i] = i);
+        this.#columns.forEach(i => headerData[i] = i);
         const data = [...this.data, headerData];
 
         data.forEach(i => {
@@ -56,62 +64,54 @@ class MDTable {
             })
         });
 
-        this.columnWidth = result;
+        this.#columnWidth = result;
     }
 
-    _textAsWidth(text, width) {
+    #textAsWidth(text, width) {
         if (width === undefined) return text;
         let spaces = width - text.length;
         if (spaces < 0) spaces = 0;
         return text.trim() + " ".repeat(spaces);
     }
 
-    _renderHeader() {
+    #renderHeader() {
         let header = '| ';
 
-        const last = this.columns.length;
-        this.columns.forEach((i, index) => {
-            const width = this.columnWidth.get(i);
-            header += this._textAsWidth(i, width);
+        const last = this.#columns.length;
+        this.#columns.forEach((i, index) => {
+            const width = this.#columnWidth.get(i);
+            header += this.#textAsWidth(i, width);
             header += last === (index + 1) ? " |" : " | ";
         });
 
         return header;
     }
 
-    _renderHeaderSplit() {
+    #renderHeaderSplit() {
         let header = '|';
 
-        const last = this.columns.length;
-        this.columns.forEach((i, index) => {
-            const width = this.columnWidth.get(i) ?? 0;
+        const last = this.#columns.length;
+        this.#columns.forEach((i, index) => {
+            const width = this.#columnWidth.get(i) ?? 0;
             header += "-".repeat(width + 2) + "|";
         });
 
         return header;
     }
 
-    _renderRow(item) {
+    #renderRow(item) {
         if (typeof item === 'string') return `| ${item} |`
         let row = '| ';
 
-        const last = this.columns.length;
-        this.columns.forEach((key, index) => {
+        const last = this.#columns.length;
+        this.#columns.forEach((key, index) => {
             const text = String(item[key] ?? '');
-            const width = this.columnWidth.get(key) ?? 0;
-            row += this._textAsWidth(text, width);
+            const width = this.#columnWidth.get(key) ?? 0;
+            row += this.#textAsWidth(text, width);
             row += last === (index + 1) ? " |" : " | ";
         });
 
         return row;
-    }
-
-    toString() {
-        return [
-            this._renderHeader(),
-            this._renderHeaderSplit(),
-            ...this.data.map((item) => this._renderRow(item)),
-        ].join("\n");
     }
 }
 

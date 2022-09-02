@@ -3,6 +3,8 @@ const { ConfigItem } = require("./ConfigItem");
 class Config {
   #items = new Map();
 
+  constructor() {}
+
   static from(json) {
     const _json = json ?? {};
     if (_json instanceof Config) return json;

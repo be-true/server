@@ -6,32 +6,31 @@ class ConfigItem {
   #isRequired = false;
   #isArray = false;
   #envName;
-  #descriptionText;
-  #exampleText;
-  #defaultValue;
+  #description;
+  #example;
+  #default;
   #override;
   #error;
   #chain = [];
   #hasCash = false;
   #cash;
   #splitter = ',';
-  #enum;
-
+  
   constructor() {}
 
   description(text) {
-    this.#descriptionText = text;
+    this.#description = text;
     return this;
   }
 
   example(text) {
-    this.#exampleText = text;
+    this.#example = text;
     return this;
   }
 
   default(value) {
     this.#hasCash = false;
-    this.#defaultValue = value;
+    this.#default = value;
     return this;
   }
 
@@ -156,14 +155,14 @@ class ConfigItem {
   }
 
   #value() {
-    return this.#override ?? process.env[this.#envName] ?? this.#defaultValue;
+    return this.#override ?? process.env[this.#envName] ?? this.#default;
   }
 
   /**
    * Установка цепочки для обработки переменных
    * Передается массив вида
    * (value: any): => any | any[] - Функция, которая принимает значение и возвращает другое значение или массив
-   * или tuple в котором первым параметром передается та же функция, а вторым параметром флаг, добавить его или в цепочку обработки переменных 
+   * или tuple в котором первым параметром передается та же функция, а вторым параметром флаг, добавить его или нет в цепочку обработки переменных 
    * [(value: any): => any | any[], boolean]
    */
   #setChain(...chain) {
