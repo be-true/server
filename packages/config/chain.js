@@ -22,6 +22,12 @@ const parseBoolean = (value) => {
     throw new Error('Не допустимое значение для boolean')
 }
 
+const parseEnum = (items) => (value) => {
+    const has = items.map(item => item === value).some(i => i);
+    if (!has) throw new Error(`Должен быть один из них ${items.join(', ')}`);
+    return value;
+}
+
 const split = (splitter) => (value) => value.split(splitter); 
 
 const trimLeft = (trim) => (value) => {
@@ -48,6 +54,7 @@ module.exports = {
     required,
     parseInteger,
     parseBoolean,
+    parseEnum,
     split,
     trim,
     trimLeft,

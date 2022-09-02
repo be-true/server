@@ -11,6 +11,11 @@ class ExampleConfig extends Config {
         .description("Url адрес")
         .example('http://example.ru/path')
         .asString()
+
+    level = this.param('level')
+        .description("Уровень логирования")
+        .example('warn')
+        .asEnum(['warn', 'error'])
 }
 
 const config = new ExampleConfig();

@@ -1,6 +1,6 @@
 'use_strict'
 
-const { required, parseInteger, parseBoolean, split, trim, trimRight, startIt } = require('./chain')
+const { required, parseInteger, parseBoolean, split, trim, trimRight, startIt, parseEnum } = require('./chain')
 
 class ConfigItem {
   #isRequired = false;
@@ -125,6 +125,15 @@ class ConfigItem {
     return this.get();
   }
 
+  asEnum(list) {
+    this.#setChain(
+      [split(this.#splitter), this.#isArray],
+      [required, this.#isRequired],
+      parseEnum(list)
+    );
+    return this.get();
+  }
+
   asArrayString() {
     this.#isArray = true;
     return this.asString();
@@ -143,6 +152,11 @@ class ConfigItem {
   asArrayUrl() {
     this.#isArray = true;
     return this.asUrl();
+  }
+
+  asArrayEnum(list) {
+    this.#isArray = true;
+    return this.asEnum(list);
   }
 
   #value() {

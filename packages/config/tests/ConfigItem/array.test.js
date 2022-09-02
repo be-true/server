@@ -63,3 +63,17 @@ metatests.testAsync("ConfigItem:#asArrayUrl два значение", async (tes
     test.strictEqual(item.get(), ['http://asd.run', 'https://olo.run']);
     test.strictEqual(item.hasError(), false);
 });
+
+metatests.testAsync("ConfigItem:#asArrayEnum одно значение", async (test) => {
+    const item = new ConfigItem();
+    item.default('warn').asArrayEnum(['warn', 'error', 'info', 'silent'])
+    test.strictEqual(item.get(), ['warn']);
+    test.strictEqual(item.hasError(), false);
+});
+
+metatests.testAsync("ConfigItem:#asArrayEnum два значение", async (test) => {
+    const item = new ConfigItem();
+    item.default('warn,error').asArrayEnum(['warn', 'error', 'info', 'silent'])
+    test.strictEqual(item.get(), ['warn', 'error']);
+    test.strictEqual(item.hasError(), false);
+});
