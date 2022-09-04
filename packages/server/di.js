@@ -26,6 +26,10 @@ class DI {
         }
     }
 
+    getServices() {
+        return this._services;
+    }
+
     get(name) {
         return this._di[name];
     }

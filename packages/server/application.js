@@ -70,6 +70,7 @@ class Application {
     }
 
     async start() {
+        this._validateConfig();
         await this.di.start(this);
     }
 
@@ -80,6 +81,25 @@ class Application {
         await di.scope();
         di.get('logger').setParams(di.get('request'));
         return di;
+    }
+
+    _validateConfig() {
+        let result = [];
+        let hasError = false;
+        for (const { config } of this.di.getServices()) {
+            if (config.hasErrors()) {
+                hasError = true;
+                const Reset = "\x1b[0m"
+                const BgRed = "\x1b[41m";
+                config.context && result.push(`${BgRed}${config.context}${Reset}`);
+                result.push(config.renderErrors());
+            }
+        }
+
+        if (hasError) {
+            console.error(result.join('\n') + '\n');
+            process.exit(1)
+        };
     }
 }
 

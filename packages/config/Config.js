@@ -1,6 +1,8 @@
 const { ConfigItem } = require("./ConfigItem");
+const { MDTable } = require("./MDTable");
 
 class Config {
+  connext;
   #items = new Map();
 
   constructor() {}
@@ -37,6 +39,29 @@ class Config {
       item.override(config[param]);
     }
     return this;
+  }
+
+  hasErrors() {
+    for (const [key, item] of this.#items) {
+      if (item.hasError()) return true;
+    }
+    return false;
+  }
+
+  render() {
+    const data = [];
+    for (const [key, item] of this.#items) {
+      data.push(item.export());
+    }
+    return new MDTable(data).toString();
+  }
+
+  renderErrors() {
+    const data = [];
+    for (const [key, item] of this.#items) {
+      if (item.hasError()) data.push(item.export());
+    }
+    return new MDTable(data).toString();
   }
 
 }

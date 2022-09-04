@@ -83,6 +83,16 @@ class ConfigItem {
     return this.#error !== undefined;
   }
 
+  export() {
+    return {
+      env: this.#envName,
+      error: this.#error,
+      description: this.#description,
+      example: this.#example,
+      default: this.#default,
+    }
+  }
+
   asString() {
     this.#setChain(
       [split(this.#splitter), this.#isArray],

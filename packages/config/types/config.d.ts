@@ -30,6 +30,9 @@ export interface ConfigItemRequired extends ConfigItem<true> {
 export declare class Config {
     static from(json?: any): Config;
     param(name: string): ConfigItemOption;
+    hasErrors(): boolean;
+    render(): string;
+    renderErrors(): string;
     override(name: string, value: any): this;
     merge(config: Config): this;
 }
