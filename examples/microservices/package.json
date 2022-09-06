@@ -16,6 +16,7 @@
     "start:game": "node ./game",
     "start:chat": "node ./chat",
     "test": "node ./test.js",
+    "generate": "npm run generate -w gate && npm run generate -w game && npm run generate -w chat",
     "build": "npm run build:cp && npm run build:gate && npm run build:chat && npm run build:game",
     "build:cp": "rm -rf ./lib_server && cp -r ../../packages ./lib_server",
     "build:gate": "docker build -t server_ms_gate:0.0.1 -f ./gate/Dockerfile .",

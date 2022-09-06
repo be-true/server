@@ -1,0 +1,26 @@
+{
+  "name": "@be-true/utils",
+  "version": "0.0.1",
+  "description": "Набор вспомогательных функций",
+  "main": "index.js",
+  "devDependencies": {},
+  "types": "types/types.d.ts",
+  "scripts": {
+    "test": "metatests tests --dependentSubtests=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/be-true/server.git",
+    "directory": "packages/utils"
+  },
+  "keywords": [
+    "be-true",
+    "utils"
+  ],
+  "author": "eawapownikov@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/be-true/server/issues"
+  },
+  "homepage": "https://github.com/be-true/server#readme"
+}

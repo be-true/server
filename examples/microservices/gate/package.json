@@ -4,11 +4,13 @@
   "description": "Gate",
   "main": "index.js",
   "scripts": {
+    "generate": "node ./generate.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@be-true/utils": "^0.0.1",
     "@be-true/ws": "^0.0.1"
   }
 }

@@ -55,6 +55,8 @@ class Application {
         return this._proxyCommands;
     }
 
+    async exportEnvs() {}
+
     async handleCommand(commandCode, params, headers) {
         const di = await this._prepareDI(commandCode, params, headers);
         const logger = di.get('logger') ?? new LoggerService(null, { config: { pretty: false } });
