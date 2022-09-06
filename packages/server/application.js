@@ -55,7 +55,9 @@ class Application {
         return this._proxyCommands;
     }
 
-    async exportEnvs() {}
+    async exportEnvs() {
+        return 'asd'
+    }
 
     async handleCommand(commandCode, params, headers) {
         const di = await this._prepareDI(commandCode, params, headers);
