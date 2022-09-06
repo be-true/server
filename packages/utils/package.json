@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Набор вспомогательных функций",
   "main": "index.js",
-  "devDependencies": {},
   "types": "types/types.d.ts",
   "scripts": {
     "test": "metatests tests --dependentSubtests=true"
@@ -22,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/be-true/server/issues"
   },
-  "homepage": "https://github.com/be-true/server#readme"
+  "homepage": "https://github.com/be-true/server#readme",
+  "dependencies": {
+    "metatests": "^0.8.2"
+  }
 }

@@ -6,6 +6,6 @@
  * @param start - Начиная с конца подстроки
  * @param end - Заканчивая до начала подстроки
  * @param replacement  - Заменить участок на переданную строку
- * @returns 
+ * @returns Promise<void>
  */
 export declare const replaceInFile = (filePath: string, start: string, end: string, replacement: string) => Promise<void>
