@@ -83,6 +83,10 @@ class ConfigItem {
     return this.#error !== undefined;
   }
 
+  hasEnv() {
+    return this.#envName !== undefined;
+  }
+
   export() {
     return {
       env: this.#envName,

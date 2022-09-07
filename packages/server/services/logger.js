@@ -31,7 +31,7 @@ const nameToLevel = {
 }
 
 class LoggerConfig extends Config {
-    context = 'HTTP транспорт до HTTPAdapter-а';
+    context = 'Logger';
     constructor() {
         super();
         this.pretty = this.param('pretty')

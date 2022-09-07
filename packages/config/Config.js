@@ -48,10 +48,16 @@ class Config {
     return false;
   }
 
+  hasEnvs() {
+    return Array.from(this.#items.values()).some(i => i.hasEnv());
+  }
+
   render() {
     const data = [];
     for (const [key, item] of this.#items) {
-      data.push(item.export());
+      if (!item.hasEnv()) continue;
+      const { error, ...rest } = item.export();
+      data.push(rest);
     }
     return new MDTable(data).toString();
   }

@@ -4,6 +4,7 @@ export interface ConfigItem<isRequired = undefined> {
     example(text: string): this;
     override(value: any): this;
     hasError(): boolean;
+    hasEnv(): boolean;
     splitter(splitter: string): this;
     asString(): isRequired extends undefined? string | undefined : string ;
     asInteger(): isRequired extends undefined? number | undefined : number ;
@@ -35,4 +36,5 @@ export declare class Config {
     renderErrors(): string;
     override(name: string, value: any): this;
     merge(config: Config): this;
+    hasEnvs(): boolean;
 }

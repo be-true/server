@@ -2,7 +2,7 @@ const http = require("http");
 const { Config } = require('@be-true/config');
 
 class HttpTransportConfig extends Config {
-    context = 'HTTP транспорт до HTTPAdapter-а';
+    context = 'HTTP транспорт';
     constructor() {
         super();
         this.hostname = this.param('host')

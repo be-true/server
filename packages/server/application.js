@@ -56,7 +56,7 @@ class Application {
     }
 
     async exportEnvs() {
-        return 'asd'
+        return this._exportConfig();
     }
 
     async handleCommand(commandCode, params, headers) {
@@ -104,6 +104,19 @@ class Application {
             console.error(result.join('\n') + '\n');
             process.exit(1)
         };
+    }
+
+    _exportConfig() {
+        let result = [];
+
+        for (const { config } of this.di.getServices()) {
+            if (config.hasEnvs()) {
+                config.context && result.push(`## <u>${config.context}</u>`);
+                result.push(config.render() + '\n');
+            }
+        }
+
+        return result.join('\n');
     }
 }
 
