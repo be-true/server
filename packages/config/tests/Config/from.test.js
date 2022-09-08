@@ -18,3 +18,13 @@ metatests.testAsync("Config:#from если передан class Config", async (
     test.strictEqual(item.port, 3000);
     test.strictEqual(item.host, 'http://domain.ru');
 });
+
+metatests.testAsync("Config:#from передан _settings", async (test) => {
+    const item = Config.from({
+        _settings: { description: 'Описание', context: 'DB2' },
+        port: 3000,
+    });
+    test.strictEqual(item.port, 3000);
+    test.strictEqual(item.description, 'Описание');
+    test.strictEqual(item.context, 'DB2');
+});

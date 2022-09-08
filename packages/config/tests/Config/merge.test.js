@@ -6,27 +6,47 @@ metatests.testAsync("Config:#merge Все поля", async (test) => {
         host: 'http://domain.ru',
         port: 3000,
     });
-    const config2 = new Config();
-    config2.param('port').default(3003);
-    config2.param('host').default('http://sub.domain.ru');
-
-    config.merge(config2);
+    const override = {
+        'port': 3003,
+        'host': 'http://sub.domain.ru'
+    };
+    config.merge(override);
 
     test.strictEqual(config.port, 3003);
     test.strictEqual(config.host, 'http://sub.domain.ru');
 });
 
-metatests.testAsync("Config:#merge Частичное", async (test) => {
+metatests.testSync("Config:#merge Частичное", (test) => {
     const config = Config.from({
         host: 'http://domain.ru',
         port: 3000,
     });
     config.override('host', 'http://already.domain.ru')
-    const config2 = new Config();
-    config2.param('port').default(3003);
 
-    config.merge(config2);
+    const override = {
+        port: 3003,
+    };
+    config.merge(override);
 
     test.strictEqual(config.port, 3003);
     test.strictEqual(config.host, 'http://already.domain.ru');
+});
+
+metatests.testSync("Config:#merge _settings", (test) => {
+    const config = Config.from({
+        host: 'http://domain.ru',
+        port: 3000,
+    });
+    config.override('host', 'http://already.domain.ru')
+
+    const override = {
+        _settings: { description: 'Описание', context: 'DB2' },
+        port: 3003,
+    };
+    config.merge(override);
+
+    test.strictEqual(config.port, 3003);
+    test.strictEqual(config.host, 'http://already.domain.ru');
+    test.strictEqual(config.description, 'Описание');
+    test.strictEqual(config.context, 'DB2');
 });

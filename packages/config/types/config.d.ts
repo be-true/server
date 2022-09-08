@@ -56,6 +56,8 @@ export declare class Config {
     description: string;
     /** Контекст обработки ENV переменных */
     context: string;
+    /** Устанавливает настройки для конфигуратора */
+    setSettings(settings: ConfigSettingsParams): this;
     /** Добавление параметра конфигурации */
     param(name: string): ConfigItemOption;
     /** Проверка наличия ошибок */
@@ -69,5 +71,10 @@ export declare class Config {
     /** Перезаписывание параметра конфигурации значением */
     override(name: string, value: any): this;
     /** Объединение параметров конфига */
-    merge(config: Config): this;
+    merge(config: any): this;
+}
+
+export type ConfigSettingsParams = {
+    description?: string;
+    context?: string;
 }

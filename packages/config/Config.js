@@ -12,13 +12,34 @@ class Config {
     const _json = json ?? {};
     if (_json instanceof Config) return json;
     const config = new Config();
-    for (const [key, value] of Object.entries(_json)) {
+    const { _settings, ...params } = _json;
+    config.setSettings(_settings);
+    for (const [key, value] of Object.entries(params)) {
       config.param(key).default(value);
     }
     return config;
   }
 
+  setSettings(settings) {
+    if (typeof settings !== 'object') return this;
+    
+    const self = this;
+    const keys = ['description', 'context'];
+    for (const key of keys) {
+      if (settings[key] === undefined) continue;
+      self[key] = settings[key];
+    }
+    if (settings.context && settings.context.length > 0) {
+      for (const [key, item] of this.#items) {
+        item.setContext(settings.context);
+      }
+    }
+
+    return this;
+  }
+
   param(name) {
+    if (name === '_settings') throw new Error("Поле _settings зарезервировано");
     const item = new ConfigItem();
     this.#items.set(name, item);
     Object.defineProperty(this, name, {
@@ -34,10 +55,12 @@ class Config {
       return this;
   }
 
-  merge(config) {
-    for (const [param, item] of this.#items) {
-      if (config[param] === undefined) continue;
-      item.override(config[param]);
+  merge(data) {
+    const { _settings, ...params } = data ?? {};
+    this.setSettings(_settings);
+    for (const [key, item] of this.#items) {
+      if (params[key] === undefined) continue;
+      item.override(params[key]);
     }
     return this;
   }

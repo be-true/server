@@ -3,8 +3,10 @@
 const { required, parseInteger, parseBoolean, split, trim, trimRight, startIt, parseEnum } = require('./chain')
 
 class ConfigItem {
+  #context = '';
   #isRequired = false;
   #isArray = false;
+  #envNameTemplate;
   #envName;
   #description;
   #example;
@@ -29,19 +31,20 @@ class ConfigItem {
   }
 
   default(value) {
-    this.#hasCash = false;
+    this.#reset();
     this.#default = value;
     return this;
   }
 
   fromEnv(envName) {
-    this.#hasCash = false;
-    this.#envName = envName;
+    this.#reset();
+    this.#envNameTemplate = envName;
+    this.#envName = this.#calcEnvName(this.#envNameTemplate, this.#context);
     return this;
   }
 
   override(value) {
-    this.#hasCash = false;
+    this.#reset();
     this.#override = value;
     return this;
   }
@@ -68,15 +71,21 @@ class ConfigItem {
   }
 
   required() {
-    this.#hasCash = false;
+    this.#reset();
     this.#isRequired = true;
     return this;
   }
 
   splitter(splitter) {
-    this.#hasCash = false;
+    this.#reset();
     this.#splitter = splitter;
     return this;
+  }
+
+  setContext(context) {
+    this.#reset();
+    this.#context = context.toUpperCase();
+    this.#envName = this.#calcEnvName(this.#envNameTemplate, this.#context);
   }
 
   hasError() {
@@ -172,6 +181,20 @@ class ConfigItem {
     return this.#override ?? process.env[this.#envName] ?? this.#default;
   }
 
+  #reset() {
+    this.#hasCash = false;
+  }
+
+  #calcEnvName(template, context) {
+    if (template === undefined) return undefined;
+    const clear = (value) => value.replace(/\_+/g, '_').replace(/\_+$/g, '').replace(/$\_+/g, '');
+    const has = template.indexOf('{context}') !== -1;
+    if (!has && context.length > 0) return `${context}_${template}`;
+    if (has && context.length === 0) return clear(template.replace('{context}', ''));
+    if (has && context.length > 0) return clear(template.replace('{context}', `_${context}_`));
+    return template;
+  }
+
   /**
    * Установка цепочки для обработки переменных
    * Передается массив вида
@@ -180,7 +203,7 @@ class ConfigItem {
    * [(value: any): => any | any[], boolean]
    */
   #setChain(...chain) {
-    this.#hasCash = false;
+    this.#reset();
     this.#chain = [];
     for (const item of chain) {
       let element = item;
