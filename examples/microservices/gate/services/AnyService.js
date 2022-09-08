@@ -1,7 +1,8 @@
 const { Config } = require("@be-true/config/Config");
 
 class AnyConfig extends Config {
-    context = 'AnyService'
+    description = 'AnyService'
+
     constructor() {
         super();
         this.level = this.param('level')

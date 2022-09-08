@@ -95,7 +95,9 @@ class Application {
                 hasError = true;
                 const Reset = "\x1b[0m"
                 const BgRed = "\x1b[41m";
-                config.context && result.push(`${BgRed}${config.context}${Reset}`);
+                if (config.description && config.description.trim().length > 0) {
+                    result.push(`${BgRed}${config.description}${Reset}`);
+                }
                 result.push(config.renderErrors());
             }
         }
@@ -111,7 +113,9 @@ class Application {
 
         for (const { config } of this.di.getServices()) {
             if (config.hasEnvs()) {
-                config.context && result.push(`## <u>${config.context}</u>`);
+                if (config.description && config.description.trim().length > 0) {
+                    result.push(`## <u>${config.description}</u>`);
+                }
                 result.push(config.render() + '\n');
             }
         }

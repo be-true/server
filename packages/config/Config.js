@@ -2,7 +2,8 @@ const { ConfigItem } = require("./ConfigItem");
 const { MDTable } = require("./MDTable");
 
 class Config {
-  connext;
+  description = '';
+  context = '';
   #items = new Map();
 
   constructor() {}

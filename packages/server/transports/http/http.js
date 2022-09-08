@@ -4,7 +4,7 @@ const http = require("http");
 const { Config } = require("@be-true/config");
 
 class HttpConfig extends Config {
-    context = 'WEB сервер';
+    description = 'WEB сервер';
     constructor() {
         super();
         this.host = this.param('host')

@@ -31,7 +31,7 @@ const nameToLevel = {
 }
 
 class LoggerConfig extends Config {
-    context = 'Logger';
+    description = 'Logger';
     constructor() {
         super();
         this.pretty = this.param('pretty')
