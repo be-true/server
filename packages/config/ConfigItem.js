@@ -17,6 +17,7 @@ class ConfigItem {
   #hasCash = false;
   #cash;
   #splitter = ',';
+  #type;
   
   constructor() {}
 
@@ -98,15 +99,20 @@ class ConfigItem {
 
   export() {
     return {
+      required: this.#isRequired,
       env: this.#envName,
       error: this.#error,
       description: this.#description,
       example: this.#example,
       default: this.#default,
+      isArray: this.#isArray,
+      splitter: this.#splitter,
+      type: this.#type,
     }
   }
 
   asString() {
+    this.#type = 'string';
     this.#setChain(
       [split(this.#splitter), this.#isArray],
       [required, this.#isRequired],
@@ -115,6 +121,7 @@ class ConfigItem {
   }
 
   asInteger() {
+    this.#type = 'integer';
     this.#setChain(
       [split(this.#splitter), this.#isArray],
       [required, this.#isRequired],
@@ -124,6 +131,7 @@ class ConfigItem {
   }
 
   asBoolean() {
+    this.#type = 'boolean';
     this.#setChain(
       [split(this.#splitter), this.#isArray],
       [required, this.#isRequired],
@@ -133,6 +141,7 @@ class ConfigItem {
   }
 
   asUrl() {
+    this.#type = 'string';
     this.#setChain(
       [split(this.#splitter), this.#isArray],
       [required, this.#isRequired],
@@ -144,6 +153,7 @@ class ConfigItem {
   }
 
   asEnum(list) {
+    this.#type = `enum:${list.join(',')}`;
     this.#setChain(
       [split(this.#splitter), this.#isArray],
       [required, this.#isRequired],

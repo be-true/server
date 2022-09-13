@@ -80,8 +80,8 @@ class Config {
     const data = [];
     for (const [key, item] of this.#items) {
       if (!item.hasEnv()) continue;
-      const { error, ...rest } = item.export();
-      data.push(rest);
+      const formatted = this.#formatExport(item.export());
+      data.push(formatted);
     }
     return new MDTable(data).toString();
   }
@@ -89,9 +89,28 @@ class Config {
   renderErrors() {
     const data = [];
     for (const [key, item] of this.#items) {
-      if (item.hasError()) data.push(item.export());
+      const formatted = this.#formatExport(item.export(), true);
+      if (item.hasError()) data.push(formatted);
     }
     return new MDTable(data).toString();
+  }
+
+  #formatExport(data, asError = false) {
+    const wrap = (value) => asError ? value : '`' + value + '`';
+    let type = wrap(data.type);
+    if (data.isArray) type = 'Массив ' + type + ' разделенных ' + wrap(data.splitter) + '';
+    const result = {
+      error: data.error,
+      required: data.required ? wrap('да') : '',
+      default: data.default,
+      env: data.env ? wrap(data.env) : '',
+      description: data.description,
+      type,
+    }
+
+    if (!asError) delete result.error;
+
+    return result;
   }
 
 }

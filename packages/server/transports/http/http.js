@@ -11,14 +11,12 @@ class HttpConfig extends Config {
             .default('127.0.0.1')
             .fromEnv('HTTP_HOST')
             .description('HOST WEB сервера')
-            .required()
             .asString();
             
         this.port = this.param('port')
             .default(3000)
             .fromEnv('HTTP_PORT')
             .description('Port WEB сервера')
-            .required()
             .asInteger();
     }
 }

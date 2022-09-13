@@ -5,33 +5,33 @@
 [envs]: start
 
 ## <u>Logger</u>
-| env        | description                                 | example | default |
-|------------|---------------------------------------------|---------|---------|
-| LOG_PRETTY | Отображать логи в человеко понятном формате |         | false   |
-| LOG_LEVEL  | Уровень отображения логов                   |         | info    |
+| required | default | env          | description                                 | type                                                              |
+|----------|---------|--------------|---------------------------------------------|-------------------------------------------------------------------|
+|          | false   | `LOG_PRETTY` | Отображать логи в человеко понятном формате | `boolean`                                                         |
+|          | info    | `LOG_LEVEL`  | Уровень отображения логов                   | `enum:trace,debug,info,warn,error,fatal,silent,10,20,30,40,50,60` |
 
 ## <u>WEB сервер</u>
-| env       | description      | example | default   |
-|-----------|------------------|---------|-----------|
-| HTTP_HOST | HOST WEB сервера |         | 127.0.0.1 |
-| HTTP_PORT | Port WEB сервера |         | 3000      |
+| required | default   | env         | description      | type      |
+|----------|-----------|-------------|------------------|-----------|
+|          | 127.0.0.1 | `HTTP_HOST` | HOST WEB сервера | `string`  |
+|          | 3000      | `HTTP_PORT` | Port WEB сервера | `integer` |
 
 ## <u>HTTP транспорт до сервиса GAME</u>
-| env                      | description                                  | example | default   |
-|--------------------------|----------------------------------------------|---------|-----------|
-| GAME_HTTP_TRANSPORT_HOST | HOST WEB сервера к которому идет подключение |         | 127.0.0.1 |
-| GAME_HTTP_TRANSPORT_PORT | Port WEB сервера к которому идет подключение |         | 3000      |
+| required | default   | env                        | description                                  | type      |
+|----------|-----------|----------------------------|----------------------------------------------|-----------|
+|          | 127.0.0.1 | `GAME_HTTP_TRANSPORT_HOST` | HOST WEB сервера к которому идет подключение | `string`  |
+|          | 3000      | `GAME_HTTP_TRANSPORT_PORT` | Port WEB сервера к которому идет подключение | `integer` |
 
 ## <u>HTTP транспорт до сервиса CHAT</u>
-| env                      | description                                  | example | default   |
-|--------------------------|----------------------------------------------|---------|-----------|
-| CHAT_HTTP_TRANSPORT_HOST | HOST WEB сервера к которому идет подключение |         | 127.0.0.1 |
-| CHAT_HTTP_TRANSPORT_PORT | Port WEB сервера к которому идет подключение |         | 3000      |
+| required | default   | env                        | description                                  | type      |
+|----------|-----------|----------------------------|----------------------------------------------|-----------|
+|          | 127.0.0.1 | `CHAT_HTTP_TRANSPORT_HOST` | HOST WEB сервера к которому идет подключение | `string`  |
+|          | 3000      | `CHAT_HTTP_TRANSPORT_PORT` | Port WEB сервера к которому идет подключение | `integer` |
 
 ## <u>AnyService</u>
-| env       | description                   | example | default |
-|-----------|-------------------------------|---------|---------|
-| ANY_LEVEL | Задает уровень взаимодействия | low     |         |
+| required | default | env         | description                   | type                    |
+|----------|---------|-------------|-------------------------------|-------------------------|
+| `да`     |         | `ANY_LEVEL` | Задает уровень взаимодействия | `enum:low,middle,hight` |
 
 
 [envs]: end

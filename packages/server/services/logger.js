@@ -38,18 +38,16 @@ class LoggerConfig extends Config {
             .default(false)
             .fromEnv('LOG_PRETTY')
             .description('Отображать логи в человеко понятном формате')
-            .required()
             .asBoolean()
             
         const levelEnum = [
             ...Object.values(levelToName).map(i => i.toLowerCase()),
-            ...Object.values(nameToLevel)
+            ...Object.values(nameToLevel).filter(i => i !== Infinity)
         ];
         this.level = this.param('level')
             .default('info')
             .fromEnv('LOG_LEVEL')
             .description('Уровень отображения логов')
-            .required()
             .asEnum(levelEnum);
     }
 }
