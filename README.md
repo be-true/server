@@ -4,6 +4,7 @@
 - Конфигурация
     - [Описание](./packages/config/README.md)
     - [Использование с сервером приложения](./packages/server/docs/configuration.md)
+    - [Валидация и авто документация](./packages/server/docs/configuration-validate-and-docs.md)
 - [Сервер приложения](./packages/server/README.md)
     - Приложение
     - [Сервисы](./packages/server/docs/service.md)
