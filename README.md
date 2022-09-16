@@ -1,10 +1,21 @@
-# @be-true Стек
+# @be-true
 
+## Документация
 - Конфигурация
-    - [Описание библиотеки](./packages/config/README.md)
+    - [Описание](./packages/config/README.md)
     - [Использование с сервером приложения](./packages/server/docs/configuration.md)
-- Сервер приложения
+- [Сервер приложения](./packages/server/README.md)
+    - Приложение
     - [Сервисы](./packages/server/docs/service.md)
+    - DI. Управление зависимостями
+    - Команды. 
+    - Response. Ответ выполненной команды
+    - Адаптеры
+    - Client. Вызов внешних сервисов
+    - Транспорт
+    - Логи
+- WebSocket (WS)
+    - Адаптер для WS
 
 # Что нужно сделать для MVP
 - Конфигурация через envs с использованием библиотеки  @be-true/config
