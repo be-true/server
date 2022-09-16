@@ -43,7 +43,6 @@ npm i @be-true/config --save
 ## Пример файла конфигурации
 
 JS
-
 ```javascript
 const { Config } = require('@be-true/config');
 
@@ -56,7 +55,7 @@ class LoggerConfig extends Config {
             .default(false)
             .fromEnv('LOG_PRETTY')
             .description('Отображать логи в человеко понятном формате')
-            .asBoolean()
+            .asBoolean();
             
         this.level = this.param('level')
             .default('info')
@@ -65,10 +64,6 @@ class LoggerConfig extends Config {
             .asEnum(levelEnum);
     }
 }
-
-const config = new LoggerConfig();
-config.render() // Возвращает таблицу с полным описанием конфигурации
-config.renderError() // Возвращает таблицу с полным описанием конфигурации
 ```
 
 TS
@@ -83,7 +78,7 @@ class LoggerConfig extends Config {
             .default(false)
             .fromEnv('LOG_PRETTY')
             .description('Отображать логи в человеко понятном формате')
-            .asBoolean()
+            .asBoolean();
             
     level = this.param('level')
             .default('info')
@@ -91,4 +86,23 @@ class LoggerConfig extends Config {
             .description('Уровень отображения логов')
             .asEnum(levelEnum);
 }
+```
+
+## Использование
+```javascript
+const config = new LoggerConfig();
+
+// Получение значений
+config.pretty; // false
+const { pretty, level } = config;
+
+// Переопределение
+config.override('pretty', true);
+config.pretty; // true
+
+// Документация. Возвращает текст с таблицей описания конфигурации
+const doc = config.render();
+
+// Валидация. Возвращает текст с таблицей ошибок
+const err = config.renderError();
 ```
