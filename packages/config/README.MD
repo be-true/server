@@ -93,12 +93,12 @@ class LoggerConfig extends Config {
 const config = new LoggerConfig();
 
 // Получение значений
-config.pretty; // false
+config.pretty; // -> false
 const { pretty, level } = config;
 
 // Переопределение
 config.override('pretty', true);
-config.pretty; // true
+config.pretty; // -> true
 
 // Документация. Возвращает текст с таблицей описания конфигурации
 const doc = config.render();
