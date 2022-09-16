@@ -141,7 +141,7 @@ class ConfigItem {
   }
 
   asUrl() {
-    this.#type = 'string';
+    this.#type = 'url';
     this.#setChain(
       [split(this.#splitter), this.#isArray],
       [required, this.#isRequired],
