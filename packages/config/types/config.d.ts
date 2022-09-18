@@ -1,4 +1,8 @@
 export interface ConfigItem<isRequired = undefined> {
+    /** Проверка наличия ошибки */
+    hasError(): boolean;
+    /** Проверка на наличие указаний переменных окружения */
+    hasEnv(): boolean;
     /** Получать значение параметра из ENV переменной */
     fromEnv(env: string): this;
     /** Описание параметра */
@@ -7,10 +11,6 @@ export interface ConfigItem<isRequired = undefined> {
     example(text: string): this;
     /** Перезаписать параметр указанным значением */
     override(value: any): this;
-     /** Проверка наличия ошибки */
-    hasError(): boolean;
-     /** Проверка на наличие указаний переменных окружения */
-    hasEnv(): boolean;
     /** Устанавливает разделитель для получения массива значений */
     splitter(splitter: string): this;
     /** Устанавливает тип возврата как строка */
