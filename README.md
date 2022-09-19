@@ -1,13 +1,12 @@
 # @be-true
 
 ## Документация
-- Конфигурация
-    - [Описание](./packages/config/README.md)
-    - [Использование с сервером приложения](./packages/server/docs/configuration.md)
-    - [Валидация и авто документация](./packages/server/docs/configuration-validate-and-docs.md)
+- [Библиотека конфигурации](./packages/config/README.md)
 - [Сервер приложения](./packages/server/README.md)
     - Приложение
     - [Сервисы](./packages/server/docs/service.md)
+    - [Конфигурация. Использование](./packages/server/docs/configuration.md)
+    - [Конфигурация. Экспорт и валидация](./packages/server/docs/configuration-validate-and-docs.md)
     - DI. Управление зависимостями
     - Команды. 
     - Response. Ответ выполненной команды
@@ -19,8 +18,6 @@
     - Адаптер для WS
 
 # Что нужно сделать для MVP
-- Конфигурация через envs с использованием библиотеки  @be-true/config
-    - Документация для библиотеки конфигурации
 - Авторизация
 - Валидация схемы JSON-ов на входе и выходе
 - Загрузка файлов
