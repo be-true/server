@@ -1,6 +1,8 @@
 [Стек](../../README.md)
 
-# @be-true/server - Сервер приложений
+# @be-true/server
+
+Сервер приложения
 
 - Приложение
 - [Сервисы](./docs/service.md)
