@@ -26,7 +26,8 @@ async function *filesInPath(pathDir) {
             } else {
                 yield {
                     file,
-                    path: pathFull
+                    path: pathFull,
+                    size: stat.size,
                 };
             }
         }
