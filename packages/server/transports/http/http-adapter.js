@@ -18,10 +18,15 @@ class AdapterHttpService {
 
     async start() {
         this._http.on('request', async (req, res) => {
-            const params = await streamToJson(req);
+            const params = req.method === 'POST' ? await streamToJson(req) : {} ;
             const headers = req.headers ?? {};
             const command = req.url.slice(1);
-            const response = await this._app.handleCommand(command, params, headers);
+
+            // Обрабатываем запрос на отдачу статики
+            let response = await this._app.handleStatic(command);
+            // Или выполняем команду
+            response = response ?? await this._app.handleCommand(command, params, headers);
+
             res.writeHead(response.code, { 'Content-Type': 'application/json' });
             response.toStream().pipe(res);
         });

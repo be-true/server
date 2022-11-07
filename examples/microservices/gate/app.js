@@ -1,8 +1,7 @@
 'use_strict'
 
-const { Application, HttpService, LoggerService, AdapterHttpService, Client, HttpTransport } = require("@be-true/server");
+const { Application, HttpService, LoggerService, AdapterHttpService, Client, HttpTransport, StaticService } = require("@be-true/server");
 const { AdapterWSService } = require("@be-true/ws");
-const { StaticService } = require("../../../packages/server/services/static");
 const { AnyService } = require("./services/AnyService");
 
 const app = new Application()

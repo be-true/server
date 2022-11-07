@@ -35,8 +35,8 @@ class StaticService {
         return this;
     }
 
-    async handle(url) {
-        
+    async handle(urls) {
+        console.log(urls);
     }
 }
 

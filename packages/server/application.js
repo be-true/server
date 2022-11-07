@@ -2,7 +2,7 @@
 
 const { ApplicationGetCommands } = require("./commands");
 const { Response } = require("./response");
-const { LoggerService } = require("./services");
+const { LoggerService, StaticService } = require("./services");
 const { DI } = require("./di");
 const { generateHash } = require("./utils/generateHash");
 const { Command } = require("./command");
@@ -71,6 +71,15 @@ class Application {
         const response = Response.from(await command.handle(params, di.export(), headers));
         response.isJSON() && logger.info({ response: response.toJSON() }, `Response ${commandCode}`)
         return response;
+    }
+
+    async handleStatic(command) {
+        const url = ('/' + command).replace(/\/+/g, '/').replace(/\/+$/, '');
+        const urls = [url, `${url}/index.html`, `${url}/index.htm`]
+        const services = Object.values(this.di.export()).filter(i => i instanceof StaticService);
+        for (const service of services) {
+            console.log(service.handle(urls));
+        }
     }
 
     async start() {
