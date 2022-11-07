@@ -9,7 +9,7 @@ class AnyConfig extends Config {
             .fromEnv('ANY_LEVEL')
             .description('Задает уровень взаимодействия')
             .example('low')
-            .required()
+            .default('low')
             .asEnum(['low', 'middle', 'hight']);
     }
 }

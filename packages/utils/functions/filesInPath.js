@@ -10,11 +10,11 @@ const path = require("path");
 /**
  * Возвращает перечень файлов содержащихся в указанной папке
  * 
- * @param {String} pathDir 
+ * @param {String} root - путь до папки или файла
  * @return {AsyncIterator<FileInfo>}
  */
-async function *filesInPath(pathDir) {
-    const dirs = [pathDir];
+async function *filesInPath(root) {
+    const dirs = [root];
     do {
         const dir = dirs.shift();
         const ls = await fs.readdir(dir);
