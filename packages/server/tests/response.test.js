@@ -34,3 +34,9 @@ metatests.testSync("Response: setResult()", (test) => {
     const response = new Response({});
     test.strictEqual(response.setResult({ any: "result" }).toJSON()["result"], { any: "result" });
 });
+
+metatests.testSync("Response: with Buffer", (test) => {
+    const json = { hello: "world" };
+    const response = new Response(Buffer.from(JSON.stringify(json)));
+    test.strictEqual(streamToJson(response.toStream()), json);
+});

@@ -78,8 +78,11 @@ class Application {
         const urls = [url, `${url}/index.html`, `${url}/index.htm`]
         const services = Object.values(this.di.export()).filter(i => i instanceof StaticService);
         for (const service of services) {
-            console.log(service.handle(urls));
+            const response = service.handle(urls);
+            if (response) return response;
         }
+
+        return;
     }
 
     async start() {

@@ -45,6 +45,7 @@ class Response {
     }
 
     toStream() {
+        if (this.result instanceof Buffer) return stringToStream(this.result);
         return stringToStream(JSON.stringify(this.toJSON()));
     }
 }

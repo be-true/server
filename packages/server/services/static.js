@@ -1,6 +1,7 @@
 'use_strict'
 
 const { filesInPath } = require("../../utils");
+const { Response } = require("../response");
 const fs = require('fs/promises');
 
 class StaticService {
@@ -24,7 +25,7 @@ class StaticService {
 
     async start() {
         for await (const file of filesInPath(this.config.root)) {
-            const key = file.path;
+            const key = this.makeKeyForFile(file.path);
             this.#files.set(key, {
                 size: file.size,
                 file: file.file,
@@ -36,7 +37,19 @@ class StaticService {
     }
 
     async handle(urls) {
-        console.log(urls);
+        for (const url of urls) {
+            const file = this.#files.get(url.toLowerCase());
+            if (file) {
+                return new Response(file.buffer);
+            }
+        }
+    }
+
+    makeKeyForFile(fileName) {
+        const root = this.config.root.replace(/\/+$/, '');
+        const file = ('/' + fileName).replace(/\/+/, '/').replace(/\/+$/, '').replace(root, '');
+        const prefix = ('/' + this.config.prefix).replace(/\/+/, '/').replace(/\/+$/, '');
+        return `${prefix}${file}`.toLowerCase();
     }
 }
 
