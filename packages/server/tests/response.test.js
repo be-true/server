@@ -35,8 +35,23 @@ metatests.testSync("Response: setResult()", (test) => {
     test.strictEqual(response.setResult({ any: "result" }).toJSON()["result"], { any: "result" });
 });
 
-metatests.testSync("Response: with Buffer", (test) => {
+metatests.testAsync("Response: with Buffer", async (test) => {
     const json = { hello: "world" };
     const response = new Response(Buffer.from(JSON.stringify(json)));
-    test.strictEqual(streamToJson(response.toStream()), json);
+    test.strictEqual(await streamToJson(response.toStream()), json);
+});
+
+metatests.testSync("Response: set headers", (test) => {
+    const json = { hello: "world" };
+    const headers = { 
+        "Content-Length": 123, 
+        'Content-Type': 'application/json'
+    };
+    const response = new Response()
+        .setHeaders(headers)
+        .setHeader('X-Request-ID', 'asd');
+    test.strictEqual(response.getHeaders(), { 
+        ...headers, 
+        'X-Request-ID': 'asd'
+    });
 });

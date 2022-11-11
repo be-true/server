@@ -4,6 +4,8 @@ const { stringToStream } = require("./utils");
 
 class Response {
 
+    #headers = new Map();
+
     static from(value) {
         if (value instanceof Response) return value;
         else return new Response(value);
@@ -28,6 +30,26 @@ class Response {
     setResult(result) {
         this.result = result;
         return this;
+    }
+
+    setHeaders(headers) {
+        for (const [name, value] of Object.entries(headers)) {
+            this.#headers.set(name, value);
+        }
+        return this;
+    }
+
+    setHeader(name, value) {
+        this.#headers.set(name, value);
+        return this;
+    }
+
+    getHeaders() {
+        const result = {};
+        for (const [name, value] of this.#headers) {
+            result[name] = value;
+        }
+        return result;
     }
 
     isJSON() {
