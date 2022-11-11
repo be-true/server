@@ -14,7 +14,7 @@
         * Падает тест 'Response: with Buffer'
         * Падает тест в logger-е 
         * Разобраться с формированием ключа файла
-        * Добавить в Response headers и возвращать из handleCommand и handleStatic с уже наполненными
+        * Возвращать Response из handleCommand и handleStatic с наполненными headers
     - DI. Управление зависимостями
     - Команды. 
     - Response. Ответ выполненной команды

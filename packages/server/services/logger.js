@@ -8,7 +8,7 @@ const LEVEL_INFO = 30;
 const LEVEL_WARN = 40;
 const LEVEL_ERROR = 50;
 const LEVEL_FATAL = 60
-const LEVEL_SILENT = Infinity;
+const LEVEL_SILENT = 70;
 
 const levelToName = {
     [LEVEL_TRACE]: "TRACE",
@@ -42,7 +42,7 @@ class LoggerConfig extends Config {
             
         const levelEnum = [
             ...Object.values(levelToName).map(i => i.toLowerCase()),
-            ...Object.values(nameToLevel).filter(i => i !== Infinity)
+            ...Object.values(nameToLevel)
         ];
         this.level = this.param('level')
             .default('info')
@@ -166,7 +166,7 @@ class LoggerService {
         lines.push(`[${levelName}]:${spaces} ${timeString} - ${msg}`)
         for (const [key, value] of Object.entries(rest)) {
             const valueString = typeof value === 'object' ? JSON.stringify(value) : value;
-            lines.push(`          ${key}: ${valueString}`);
+            lines.push(`         ${key}: ${valueString}`);
         }
         return lines.join("\n");
     }

@@ -17,8 +17,10 @@ metatests.testAsync("Application: Add command", async (test) => {
 });
 
 metatests.testAsync("Application: Error. Not find command", async (test) => {
-    const app = new Application();
+    const app = new Application()
+        .addService(LoggerService, { config: { level: 'silent' }});
     try {
+        await app.start();
         await app.handleCommand("anyCommand", {})
         test.strictEqual(1, 0)
     } catch (e) {
