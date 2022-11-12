@@ -14,7 +14,7 @@ metatests.testAsync("ConfigItem:#export type", async (test) => {
         [ (item) => item.asEnum(['one', 'two']), 'enum:one,two' ],
         [ (item) => item.asString(), 'string' ],
         [ (item) => item.asInteger(), 'integer' ],
-        [ (item) => item.asUrl(), 'string' ],
+        [ (item) => item.asUrl(), 'url' ],
         [ (item) => item.asBoolean(), 'boolean' ],
     ];
     
