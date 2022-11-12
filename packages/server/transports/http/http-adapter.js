@@ -1,6 +1,7 @@
 'use_strict'
 
 const { streamToJson } = require("../../utils");
+const { Response } = require("../../response");
 
 class AdapterHttpService {
     static service() {
@@ -18,14 +19,21 @@ class AdapterHttpService {
 
     async start() {
         this._http.on('request', async (req, res) => {
-            const params = req.method === 'POST' ? await streamToJson(req) : {} ;
-            const headers = req.headers ?? {};
-            const command = req.url.slice(1);
-
             // Обрабатываем запрос на отдачу статики
-            let response = await this._app.handleStatic(command);
+            let response = await this._app.handleStatic(req.url);
+
             // Или выполняем команду
-            response = response ?? await this._app.handleCommand(command, params, headers);
+            const apiPrefix = "/api/";
+            if (!response && req.url.startsWith(apiPrefix)) {
+                const params = req.method === 'POST' ? await streamToJson(req) : {} ;
+                const headers = req.headers ?? {};
+                const command = req.url.slice(apiPrefix.length);
+                response = await this._app.handleCommand(command, params, headers);
+            }
+
+            if (!response) response = new Response('Страница не найдена')
+                .setCode(404)
+                .setStatus("NotFoundError");
 
             res.writeHead(response.code, { 'Content-Type': 'application/json' });
             response.toStream().pipe(res);

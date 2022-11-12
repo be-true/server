@@ -39,7 +39,7 @@ class HttpTransport {
             const requestOptions = {
                 hostname,
                 port,
-                path: '/' + code.replace(/^\/+/, ''),
+                path: '/api/' + code.replace(/^\/+/, ''),
                 method: 'POST',
                 headers: {
                     ...{
