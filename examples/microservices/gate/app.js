@@ -6,7 +6,7 @@ const { AnyService } = require("./services/AnyService");
 
 const app = new Application()
     .addService(LoggerService, { config: { pretty: true } })
-    .addService(StaticService, { config: { prefix: '/docs', root: __dirname + '/services' } })
+    .addService(StaticService, { config: { prefix: '/static', root: __dirname + '/static' } })
     .addService(HttpService, { config: { port: 3000 }})
     .addService(HttpTransport, { name: 'transportGame', config: { 
         _settings: { description: 'HTTP транспорт до сервиса GAME', context: "GAME" }, 
