@@ -35,7 +35,7 @@ class AdapterHttpService {
                 .setCode(404)
                 .setStatus("NotFoundError");
 
-            res.writeHead(response.code, { 'Content-Type': 'application/json' });
+            res.writeHead(response.code, response.getHeaders());
             response.toStream().pipe(res);
         });
         return this;

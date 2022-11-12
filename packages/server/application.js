@@ -69,6 +69,7 @@ class Application {
         }
         logger.info({ params }, `Command ${commandCode}`);
         const response = Response.from(await command.handle(params, di.export(), headers));
+        response.setHeader('Content-Type', 'application/json');
         response.isJSON() && logger.info({ response: response.toJSON() }, `Response ${commandCode}`)
         return response;
     }

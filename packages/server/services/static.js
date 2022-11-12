@@ -1,6 +1,6 @@
 'use_strict'
 
-const { filesInPath } = require("../../utils");
+const { filesInPath, mime } = require("../../utils");
 const { Response } = require("../response");
 const fs = require('fs/promises');
 
@@ -26,10 +26,13 @@ class StaticService {
     async start() {
         for await (const file of filesInPath(this.config.root)) {
             const key = this.makeKeyForFile(file.path);
+            const ext = file.file.split(".").slice(-1)[0];
             this.#files.set(key, {
                 size: file.size,
                 file: file.file,
                 buffer: await fs.readFile(file.path),
+                ext,
+                mime: mime(ext),
             })
         }
         this.logger.info([...this.#files.keys()], `Файлы загружены для url - ${this.config.prefix}`);
@@ -40,7 +43,11 @@ class StaticService {
         for (const url of urls) {
             const file = this.#files.get(url.toLowerCase());
             if (file) {
-                return new Response(file.buffer);
+                const response = new Response(file.buffer).setHeaders({
+                    'Content-Length': file.size,
+                });
+                if (file.mime) response.setHeader('Content-Type', file.mime)
+                return response;
             }
         }
     }
