@@ -15,6 +15,12 @@ metatests.testSync("Logger: Info with addition params", async (test) => {
     test.strictEqual(logger.logs, [{ time, level: 30, param: 'any param', msg: "test123" }]);
 });
 
+metatests.testSync("Logger: Передан массив в качестве параметров", async (test) => {
+    const logger = new LoggerTest();
+    logger.info(['one', 'two'], "test message");
+    test.strictEqual(logger.logs, [{ time, level: 30, msg: "test message", array: ['one', 'two'] }]);
+});
+
 metatests.testSync("Logger: pretty", async (test) => {
     const logger = new LoggerTest(null, { pretty: true });
     logger.info({ param: 'one', param2: 'two' }, "Test message");

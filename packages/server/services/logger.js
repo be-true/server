@@ -146,6 +146,9 @@ class LoggerService {
             params = args[0];
             msg = args[1];
         }
+        if (Array.isArray(params)) {
+            params = { array: params };
+        }
 
         const paramsResult = Object.assign({}, this._params, params);
 
