@@ -1,8 +1,8 @@
 'use_strict'
 
-const { filesInPath, mime, humanSize } = require("../../utils");
-const { Response } = require("../response");
-const fs = require('fs/promises');
+const { filesInPath, humanSize } = require("../../../utils");
+const { Response } = require("../../response");
+const { Template } = require('./template');
 
 class StaticService {
     static service() {
@@ -25,17 +25,9 @@ class StaticService {
 
     async start() {
         for await (const file of filesInPath(this.config.root)) {
-            const key = this.#makeKeyForFile(file.path);
-            const ext = file.file.split(".").slice(-1)[0];
-            this.#files.set(key, {
-                size: file.size,
-                file: file.file,
-                buffer: await fs.readFile(file.path),
-                ext,
-                mime: mime(ext),
-            })
+            const template = new Template(file.path, this.config.root, this.config.prefix);
+            this.#files.set(template.getKey(), await template.export())
         }
-
         const infoSizeFiles = this.#calcSizeFiles();
         const infoSizeTotal = this.#calcSizeTotal();
         this.logger.info(infoSizeFiles, `Файлы загружены для url - ${this.config.prefix} общим размером ${infoSizeTotal}`);
@@ -53,13 +45,6 @@ class StaticService {
                 return response;
             }
         }
-    }
-
-    #makeKeyForFile(fileName) {
-        const root = this.config.root.replace(/\/+$/, '');
-        const file = ('/' + fileName).replace(/\/+/, '/').replace(/\/+$/, '').replace(root, '');
-        const prefix = ('/' + this.config.prefix).replace(/\/+/, '/').replace(/\/+$/, '');
-        return `${prefix}${file}`.toLowerCase();
     }
 
     #calcSizeTotal() {
