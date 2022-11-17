@@ -39,11 +39,10 @@ class StaticService {
         for (const url of urls) {
             const file = this.#files.get(url.toLowerCase());
             if (file) {
-                const response = new Response(file.buffer).setHeaders({
+                return new Response(file.buffer).setHeaders({
                     'Content-Length': file.size,
                     'Content-Type': file.mime,
                 });
-                return response;
             }
         }
     }
@@ -54,19 +53,19 @@ class StaticService {
     }
 
     #calcSizeTotal() {
-        let result = 0;
+        let total = 0;
         for (const { size } of this.#files.values()) {
-            result += size;
+            total += size;
         }
-        return humanSize(result);
+        return humanSize(total);
     }
 
     #calcSizeFiles() {
-        const result = {};
+        const nameToSize = {};
         for (const [file, { size }] of this.#files) {
-            result[file] = `${humanSize(size)}`;
+            nameToSize[file] = `${humanSize(size)}`;
         }
-        return result;
+        return nameToSize;
     }
 }
 
