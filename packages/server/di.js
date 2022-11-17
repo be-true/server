@@ -42,6 +42,10 @@ class DI {
         return new DI(this._services, this._di);
     }
 
+    getInstanceOf(className) {
+        return Object.values(this._di).filter(i => i instanceof className);
+    }
+
     async scope() {
         await this._build(scopedServices(this._changed, this._services), true);
     }

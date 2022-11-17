@@ -74,15 +74,12 @@ class Application {
         return response;
     }
 
-    async handleStatic(command) {
-        const url = ('/' + command).replace(/\/+/g, '/').replace(/\/+$/, '');
-        const urls = [url, `${url}/index.html`, `${url}/index.htm`]
-        const services = Object.values(this.di.export()).filter(i => i instanceof StaticService);
+    async handleStatic(url) {
+        const services = this.di.getInstanceOf(StaticService);
         for (const service of services) {
-            const response = service.handle(urls);
+            const response = service.handle(url);
             if (response) return response;
         }
-
         return;
     }
 

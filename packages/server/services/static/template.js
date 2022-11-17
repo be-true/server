@@ -1,6 +1,7 @@
 const path = require("path");
-const fs = require('fs/promises');
-const fsOld = require('fs');
+const fsProm = require('fs/promises');
+const fs = require('fs');
+const { once } = require('events');
 const { mime } = require('../../../utils');
 
 class Template {
@@ -20,10 +21,8 @@ class Template {
     }
 
     getKey() {
-        const root = this.#root.replace(/\/+$/, '');
-        const file = ('/' + this.#path).replace(/\/+/, '/').replace(/\/+$/, '').replace(root, '');
-        const prefix = ('/' + this.#prefix).replace(/\/+/, '/').replace(/\/+$/, '');
-        return `${prefix}${file}`.toLowerCase();
+        const relative = path.relative(this.#root, this.#path);
+        return path.join(this.#prefix, relative).toLowerCase();
     }
 
     #isTemplate() {
@@ -39,22 +38,19 @@ class Template {
     }
 
     async #readFile() {
-        return fs.readFile(this.#path);
+        return fsProm.readFile(this.#path);
     }
 
     #build() {
-        const readable = fsOld.createReadStream(this.#pathTemplate);
-        const write = fsOld.createWriteStream(this.#path);
+        const readable = fs.createReadStream(this.#pathTemplate);
+        const write = fs.createWriteStream(this.#path);
         readable.pipe(write);
-        return new Promise((resolve, reject) => {
-            readable.on('end', () => resolve());
-            readable.on('error', reject);
-        });
+        return once(write, 'finish');
     }
 
     async export() {
         if (this.#isTemplate()) await this.#build();
-        const stat = await fs.lstat(this.#path);
+        const stat = await fsProm.lstat(this.#path);
         return {
             size: stat.size,
             file: this.#getFile(),

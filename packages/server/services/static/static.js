@@ -34,7 +34,8 @@ class StaticService {
         return this;
     }
 
-    async handle(urls) {
+    async handle(url) {
+        const urls = this.#makeUrls(url);
         for (const url of urls) {
             const file = this.#files.get(url.toLowerCase());
             if (file) {
@@ -45,6 +46,11 @@ class StaticService {
                 return response;
             }
         }
+    }
+
+    #makeUrls(url) {
+        const urlFormat = ('/' + url).replace(/\/+/g, '/').replace(/\/+$/, '');
+        return [urlFormat, `${urlFormat}/index.html`, `${urlFormat}/index.htm`];
     }
 
     #calcSizeTotal() {
