@@ -42,7 +42,6 @@ metatests.testAsync("Response: with Buffer", async (test) => {
 });
 
 metatests.testSync("Response: set headers", (test) => {
-    const json = { hello: "world" };
     const headers = { 
         "Content-Length": 123, 
         'Content-Type': 'application/json'
@@ -53,5 +52,18 @@ metatests.testSync("Response: set headers", (test) => {
     test.strictEqual(response.getHeaders(), { 
         ...headers, 
         'X-Request-ID': 'asd'
+    });
+});
+
+metatests.testSync("Response: set headers empty values", (test) => {
+    const headers = { 
+        "Content-Length": 123, 
+        'Content-Type': undefined,
+        'Content-Disposition': null,
+        'X-Request-Id': '',
+    };
+    const response = new Response().setHeaders(headers)
+    test.strictEqual(response.getHeaders(), { 
+        "Content-Length": 123
     });
 });

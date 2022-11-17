@@ -34,6 +34,7 @@ class Response {
 
     setHeaders(headers) {
         for (const [name, value] of Object.entries(headers)) {
+            if (value === undefined || value === null || value === '') continue;
             this.#headers.set(name, value);
         }
         return this;

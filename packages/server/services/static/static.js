@@ -35,20 +35,20 @@ class StaticService {
     }
 
     async handle(url) {
-        const urls = this.#makeUrls(url);
+        const urls = this.#extendUrl(url);
         for (const url of urls) {
             const file = this.#files.get(url.toLowerCase());
             if (file) {
                 const response = new Response(file.buffer).setHeaders({
                     'Content-Length': file.size,
+                    'Content-Type': file.mime,
                 });
-                if (file.mime) response.setHeader('Content-Type', file.mime)
                 return response;
             }
         }
     }
 
-    #makeUrls(url) {
+    #extendUrl(url) {
         const urlFormat = ('/' + url).replace(/\/+/g, '/').replace(/\/+$/, '');
         return [urlFormat, `${urlFormat}/index.html`, `${urlFormat}/index.htm`];
     }
