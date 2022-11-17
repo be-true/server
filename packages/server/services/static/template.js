@@ -44,7 +44,7 @@ class Template {
         return fsProm.readFile(this.#path);
     }
 
-    #build() {
+    async #build() {
         const readable = fs.createReadStream(this.#pathTemplate);
         const write = fs.createWriteStream(this.#path);
         readable.pipe(write);
@@ -57,9 +57,9 @@ class Template {
         return {
             size: stat.size,
             file: this.#getFile(),
-            buffer: await this.#readFile(),
             ext: this.#getExt(),
             mime: mime(this.#getExt()),
+            buffer: await this.#readFile(),
         };
     }
 }
