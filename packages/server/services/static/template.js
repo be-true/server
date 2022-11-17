@@ -1,7 +1,10 @@
+'use_strict'
+
 const path = require("path");
-const fsProm = require('fs/promises');
 const fs = require('fs');
+const fsProm = require('fs/promises');
 const { once } = require('events');
+
 const { mime } = require('../../../utils');
 
 class Template {
