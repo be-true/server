@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@be-true/utils": "^0.0.1",
-    "@be-true/ws": "^0.0.1"
+    "@be-true/utils": "^0.2.0",
+    "@be-true/ws": "^0.2.0"
   }
 }

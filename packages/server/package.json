@@ -1,6 +1,6 @@
 {
   "name": "@be-true/server",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Server for applications",
   "main": "index.js",
   "directories": {
@@ -21,7 +21,10 @@
     "url": "https://github.com/be-true/server/issues"
   },
   "homepage": "https://github.com/be-true/server#readme",
+  "devDependencies": {
+    "metatests": "^0.8.2"
+  },
   "dependencies": {
-    "@be-true/config": "^0.0.1"
+    "@be-true/config": "^0.2.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@be-true/utils",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Набор вспомогательных функций",
   "main": "index.js",
   "types": "types/types.d.ts",
@@ -21,8 +21,8 @@
   "bugs": {
     "url": "https://github.com/be-true/server/issues"
   },
-  "homepage": "https://github.com/be-true/server#readme",
-  "dependencies": {
+  "homepage": "https://github.com/be-true/server/blob/master/packages/utils/README.md",
+  "devDependencies": {
     "metatests": "^0.8.2"
   }
 }
