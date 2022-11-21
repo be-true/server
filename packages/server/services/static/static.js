@@ -1,6 +1,6 @@
 'use_strict'
 
-const { filesInPath, humanSize } = require("../../../utils");
+const { filesInPath, humanSize } = require("@be-true/utils");
 const { Response } = require("../../response");
 const { Template } = require('./template');
 

@@ -25,6 +25,7 @@
     "metatests": "^0.8.2"
   },
   "dependencies": {
-    "@be-true/config": "^0.2.0"
+    "@be-true/config": "^0.2.0",
+    "@be-true/utils": "^0.2.0"
   }
 }
