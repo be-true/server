@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require('fs');
 const fsProm = require('fs/promises');
 const { once } = require('events');
+const { Transform } = require('./transform');
 
 const { mime } = require('../../../utils');
 
@@ -46,8 +47,13 @@ class Template {
 
     async #build() {
         const readable = fs.createReadStream(this.#pathTemplate);
+        const transform = new Transform({
+            path: this.#path,
+            root: this.#root,
+            prefix: this.#prefix,
+        });
         const write = fs.createWriteStream(this.#path);
-        readable.pipe(write);
+        readable.pipe(transform).pipe(write);
         return once(write, 'finish');
     }
 
