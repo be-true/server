@@ -4,10 +4,10 @@ const metatests = require("metatests");
 const { Transform } = require("../../../services/static/transform");
 
 class TestRead extends Readable {
-    constructor(chunks = ['']) {
-        super();
+    constructor(chunks = [], options) {
+        super(options);
         for (const chunk of chunks) this.push(chunk);
-        this.push(null);
+        chunks.length && this.push(null);
     }
     _read(size) {}
 }
@@ -21,11 +21,27 @@ class TestWrite extends Writable {
     }
 }
 
-metatests.testAsync("Transform: Info", async (test) => {
+metatests.testAsync("Transform: only text", async (test) => {
     const read = new TestRead(['A', 'BC']);
     const transform = new Transform();
     const write = new TestWrite();
     read.pipe(transform).pipe(write);
     await once(read, 'end');
     test.strictEqual(write.result, 'ABC')
+});
+
+metatests.testAsync("Transform: config", async (test) => {
+    const read = new TestRead(['any text {{config("PARAM_1", "default_value")}}']);
+});
+
+metatests.testAsync("Transform: url", async (test) => {
+    const read = new TestRead(['any text {{ url("page/1") }}']);
+});
+
+metatests.testAsync("Transform: fileUrl", async (test) => {
+    const read = new TestRead(['any text {{ fileUrl("./path.to.file", { timestamp: true }) }}']);
+});
+
+metatests.testAsync("Transform: split function", async (test) => {
+    const read = new TestRead(['any text {{ conf', 'ig("PARAM_1", "default_value") }}']);
 });
