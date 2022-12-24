@@ -45,3 +45,7 @@ metatests.testAsync("Transform: fileUrl", async (test) => {
 metatests.testAsync("Transform: split function", async (test) => {
     const read = new TestRead(['any text {{ conf', 'ig("PARAM_1", "default_value") }}']);
 });
+
+metatests.testAsync("Transform: several functions", async (test) => {
+    const read = new TestRead(['any text {{ url("page/1") }}, {{ url("page/2") }}']);
+});
