@@ -2,12 +2,11 @@
 
 const path = require("path");
 const fs = require('fs');
-const fsProm = require('fs/promises');
 const stream = require('stream');
 const util = require('util');
 
 const { Transform } = require('./transform');
-const { mime } = require('../../../utils');
+const { mime } = require("@be-true/utils");
 const pipeline = util.promisify(stream.pipeline);
 
 class Template {
@@ -44,23 +43,23 @@ class Template {
     }
 
     async #readFile() {
-        return fsProm.readFile(this.#path);
+        return fs.promises.readFile(this.#path);
     }
 
     async #build() {
-        const read = fs.createReadStream(this.#pathTemplate);
-        const transform = new Transform({
+        const read = fs.createReadStream(this.#pathTemplate, 'utf8');
+        const transform = new Transform().setConfig({
             path: this.#path,
             root: this.#root,
             prefix: this.#prefix,
         });
-        const write = fs.createWriteStream(this.#path);
+        const write = fs.createWriteStream(this.#path, 'utf8');
         await pipeline(read, transform, write);
     }
 
     async export() {
         if (this.#isTemplate()) await this.#build();
-        const stat = await fsProm.lstat(this.#path);
+        const stat = await fs.promises.lstat(this.#path);
         return {
             size: stat.size,
             file: this.#getFile(),

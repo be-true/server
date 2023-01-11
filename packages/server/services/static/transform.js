@@ -1,10 +1,8 @@
 'use_strict'
 
-const path = require('path');
 const stream = require('stream');
 
-const { StaticError } = require('./errors');
-const { fileHash, fileExist } = require('@be-true/utils');
+const { config, urlPage, urlFile } = require('./functions');
 
 const LENGTH_HANDLEBARS = 2;
 class Transform extends stream.Transform {
@@ -26,16 +24,9 @@ class Transform extends stream.Transform {
     #getFunctions() {
         if (this.#functions) return this.#functions;
         const functions = {
-            config: (field, defaultValue) => this.#config[field] ?? defaultValue,
-            urlPage: (url) => path.join(this.#config.prefix ?? '', url),
-            urlFile: async (filePath, options = { hash: false }) => {
-                const { hash } = options;
-                const pathFull = path.join(this.#config.root, filePath);
-                if (!await fileExist(pathFull)) throw new StaticError(`File "${filePath}" not found`);
-                let hashSuffix = hash ? '?hash=' + await fileHash(pathFull, 'sha1'): '';
-                const prefix = this.#config.prefix ?? '';
-                return path.join(prefix, filePath) + hashSuffix;
-            },
+            config: config(this.#config),
+            urlPage: urlPage(this.#config),
+            urlFile: urlFile(this.#config),
         }
         return this.#functions = {
             names: Object.keys(functions),
