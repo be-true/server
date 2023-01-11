@@ -10,6 +10,7 @@ const map = [
  * Переводит байты в человеко понятный формат
  * 
  * @param {Number} size - размер в байтах
+ * @returns {String}
  */
 function humanSize(size) {
     for (const [name, max] of map) {

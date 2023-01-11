@@ -1,13 +1,10 @@
 'use_strict'
 
 const path = require('path');
-const crypto = require('crypto');
-const fs = require('fs');
 const stream = require('stream');
-const util = require('util');
-const pipeline = util.promisify(stream.pipeline);
 
 const { StaticError } = require('./errors');
+const { fileHash, fileExist } = require('@be-true/utils');
 
 const LENGTH_HANDLEBARS = 2;
 class Transform extends stream.Transform {
@@ -34,20 +31,10 @@ class Transform extends stream.Transform {
             urlFile: async (filePath, options = { hash: false }) => {
                 const { hash } = options;
                 const pathFull = path.join(this.#config.root, filePath);
-                try {
-                    await fs.promises.access(pathFull);
-                } catch(e) {
-                    throw new StaticError(`File "${filePath}" not found`);
-                }
-                let fileHash = '';
-                if (hash) {
-                    var fd = fs.createReadStream(pathFull);
-                    var hashStream = crypto.createHash('sha1').setEncoding('hex');
-                    await pipeline(fd, hashStream);
-                    fileHash = '?hash=' + hashStream.read();
-                }
+                if (!await fileExist(pathFull)) throw new StaticError(`File "${filePath}" not found`);
+                let hashSuffix = hash ? '?hash=' + await fileHash(pathFull, 'sha1'): '';
                 const prefix = this.#config.prefix ?? '';
-                return path.join(prefix, filePath) + fileHash;
+                return path.join(prefix, filePath) + hashSuffix;
             },
         }
         return this.#functions = {

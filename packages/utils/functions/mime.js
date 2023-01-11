@@ -1,7 +1,10 @@
+'use_strict'
+
 /**
  * Выдает mime тип файла по его расширению
  * 
  * @param {String} ext - расширение файла
+ * @returns {String}
  */
 function mime(ext) {
     const ext_ = ext.toLowerCase();
