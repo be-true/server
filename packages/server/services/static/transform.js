@@ -1,24 +1,44 @@
 'use_strict'
 
 const stream = require('stream');
-
+const { StaticError } = require('./errors');
 const { config, urlPage, urlFile } = require('./functions');
 
 const LENGTH_HANDLEBARS = 2;
 class Transform extends stream.Transform {
     #config = {};
     #functions;
+    #text = '';
 
     setConfig(config) {
         this.#config = config;
         return this;
     }
 
-    #purseChunk(chunk) {
-        const text = chunk.toString();
-        const start = text.indexOf('{{');
-        const end = text.indexOf('}}');
-        return { text, start, end };
+    *#purseChunk(chunk) {
+        this.#text += chunk.toString();
+
+        let run = true;
+        while(run) {
+            const start = this.#text.indexOf('{{');
+            const end = this.#text.indexOf('}}');
+            // Если нет выражения
+            if (start === -1 && end === -1) {
+                if (this.#text !== '') yield this.#text;
+                this.#text = '';
+                run = false;
+            // Если вошло целиком
+            } else if (start !== -1 && end !== -1) {
+                if (start > end) throw new StaticError('Скобки открытия и закрытия выражения перепутаны');
+                yield this.#text.substring(0, start);
+                yield this.#text.substring(start, end + 2);
+                this.#text = this.#text.substring(end + 2);
+            // Если Выражение разрезано посередине
+            } else if (start !== -1 && end === -1) {
+                run = false; // Заканчиваем, в следующем цикле заберем остаток
+                if (this.#text.length - start >= 100) throw new StaticError('Превышена максимальная длина в 100 знаков для выражения');
+            }
+        }
     }
 
     #getFunctions() {
@@ -35,19 +55,18 @@ class Transform extends stream.Transform {
     }
 
     async _transform(chunk, encoding, callback) {
-        const { text, start, end } = this.#purseChunk(chunk);
-        if (start !== -1 && end !== -1) {
-            const { names, functions } = this.#getFunctions();
-            const fnExpression = 'return ' + text.substring(start + LENGTH_HANDLEBARS, end).trim();
-            const fn = new Function(...names, fnExpression);
-            const result = text.substring(0, start) + 
-                (await fn(...functions)) + 
-                text.substring(end + LENGTH_HANDLEBARS)
-            ;
-            callback(null, result)
-        } else {
-            callback(null, chunk)
+        for (const part of this.#purseChunk(chunk)) {
+            if (part.startsWith('{{') && part.endsWith('}}')) {
+                const { names, functions } = this.#getFunctions();
+                const fnText = 'return ' + part.substring(2, part.length - 2).trim();
+                const fn = new Function(...names, fnText);
+                const result = await fn(...functions);
+                this.push(result);
+            } else {
+                this.push(part);
+            }
         }
+        callback();
     }
 }
 
