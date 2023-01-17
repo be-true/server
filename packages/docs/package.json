@@ -1,0 +1,20 @@
+{
+  "name": "@be-true/docs",
+  "version": "0.2.0",
+  "description": "Библиотека для документации API сервиса",
+  "main": "index.js",
+  "scripts": {
+    "test": "metatests tests --dependentSubtests=true"
+  },
+  "author": "eawapownikov@gmail.com",
+  "license": "MIT",
+  "homepage": "https://github.com/be-true/server/blob/master/packages/docs/README.md",
+  "bugs": {
+    "url": "https://github.com/be-true/server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/be-true/server.git",
+    "directory": "packages/docs"
+  }
+}

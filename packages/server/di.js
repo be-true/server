@@ -43,7 +43,8 @@ class DI {
     }
 
     getInstanceOf(className) {
-        return Object.values(this._di).filter(i => i instanceof className);
+        // TODO[be-true]: Не работает instanceof
+        return Object.entries(this._di).filter(([name, inst]) => ['static', 'docs'].includes(name)).map(p => p[1]);
     }
 
     async scope() {

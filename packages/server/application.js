@@ -77,7 +77,7 @@ class Application {
     async handleStatic(url) {
         const services = this.di.getInstanceOf(StaticService);
         for (const service of services) {
-            const response = service.handle(url);
+            const response = await service.handle(url);
             if (response) return response;
         }
         return;
