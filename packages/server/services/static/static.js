@@ -26,12 +26,16 @@ class StaticService {
     async start() {
         for await (const file of filesInPath(this.config.root)) {
             const template = new Template(file.path, this.config.root, this.config.prefix);
-            this.#files.set(template.getKey(), await template.export())
+            this.registerFile(template.getKey(), await template.export());
         }
         const infoSizeFiles = this.#calcSizeFiles();
         const infoSizeTotal = this.#calcSizeTotal();
         this.logger.info(infoSizeFiles, `Файлы загружены для url - ${this.config.prefix} общим размером ${infoSizeTotal}`);
         return this;
+    }
+
+    registerFile(key, data) {
+        this.#files.set(key, data);
     }
 
     async handle(url) {
