@@ -38,11 +38,24 @@ class DocsService extends StaticService {
         return this;
     }
 
+    #getCommands() {
+      return this.#app.getCommands().filter((command) => !command.code.startsWith('_'));
+    }
+
+    #makeTag(code) {
+      const splitted = code.split('/');
+      if (splitted.length === 1) return code;
+      else return splitted.slice(0, splitted.length - 1).join('');
+    }
+
     #generateSwaggerData() {
-        const paths = this.#app.getCommands().reduce((acc, command) => (acc[command.code] = this.#generatePath(command), acc), {});
-        
+        const paths = this.#getCommands().reduce((acc, command) => {
+          acc[command.code] = this.#generatePath(command); 
+          return acc 
+        }, {});
+
         return {
-            swagger: "2.0",
+            openapi: "3.0.3",
             info: {
                 title: "Документация API",
                 description: "Описание API",
@@ -50,53 +63,75 @@ class DocsService extends StaticService {
             },
             host: "http://localhost:3000",
             basePath: "/api",
-            tags: [
-                {
-                    name: "pet",
-                    description: "Животные",
-                }
-            ],
             schemes: [ "http" ],
             paths
         }
     }
 
-    #generatePath(command) {
-        return {
-            "post": {
-              "tags": [
-                "pet"
-              ],
-              "description": "",
-              "operationId": command.code,
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                {
-                  "name": "petId",
-                  "in": "path",
-                  "description": "ID of pet to update",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
+    #generatePath(command) { 
+      const tag = this.#makeTag(command.code);
+      return {
+          post: {
+            operationId: command.code,
+            tags: [ tag ],
+            description: "",
+            requestBody: {
+              description: 'ObjectSchema', 
+              required: true,
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: { 
+                      name: { type: 'string', description: 'asd' }
+                    },
+                    required: [ 'name' ]
+                  }
+                }
+              }
+            },
+            responses: {
+              "200": {
+                description: 'Успешный ответ',
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      properties: { 
+                        code: { type: 'number', enum: [ 200 ] },
+                        requestId: { type: 'string', description: 'ID запроса' },
+                        result: { type: 'object', schema: {
+                          type: 'object'
+                        }},
+                      },
+                      required: [ 'code', 'requestId', 'result' ]
+                    }
+                  },
                 },
-              ],
-              "responses": {
-                "200": {
-                  "description": "successful operation",
-                }
               },
-              "security": [
-                {
-                  "petstore_auth": [
-                    "write:pets",
-                    "read:pets"
-                  ]
+              "400": {
+                description: 'Ответ с ошибкой',
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      properties: { 
+                        code: { type: 'number', enum: [ 400 ] },
+                        requestId: { type: 'string', description: 'ID запроса' },
+                        error: { type: 'string', description: 'Код ошибки' },
+                        message: { type: 'string', description: 'Сообщение об ошибке' },
+                        detail: { type: 'object', description: 'Детальное описание ошибки', schema: {
+                          type: 'object'
+                        }},
+                      },
+                      required: [ 'code', 'requestId', 'error', 'message' ]
+                    }
+                  },
                 }
-              ]
-            }
-        };
+              }
+            },
+          }
+      };
     }
 
 }
