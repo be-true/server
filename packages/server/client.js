@@ -32,7 +32,7 @@ class Client {
 
     resetterCommand(appName, code, transport) {
         const self = this;
-        self[appName] = self[appName] ? self[appName] : {};
+        self[appName] = self[appName] ?? {};
         self[appName][code] = this.command(code, transport);
     }
 
@@ -44,7 +44,11 @@ class Client {
             }
         }
 
-        return { ..._headers, ...headers };
+        const result = { ...headers, ..._headers };
+        // Удаляем content-length, так как при проксирование размер
+        // тела меняется и http запрос зависает при неверном значении
+        delete result['content-length'];
+        return result;
     }
 }
 

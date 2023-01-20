@@ -42,8 +42,10 @@ class Application {
             this._proxyCommands.push({ appName, commandName, options: { transport: 'transport', ...options }});
             // Создаем команды для прокси методов
             const code = `${appName}/${commandName}`;
-            const command = new Command().setCode(code).setHandler((params, { client }, headers) => {
-                return client[appName][commandName](params, headers);
+            const command = new Command().setCode(code).setHandler(async (params, { client }, headers) => {
+                // client[appName][commandName] - добавляется при старте в Client
+                const response = await client[appName][commandName](params, headers);
+                return response.result;
             });
             this.addCommand(command);
         }
