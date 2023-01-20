@@ -50,7 +50,8 @@ class DocsService extends StaticService {
 
     #generateSwaggerData() {
         const paths = this.#getCommands().reduce((acc, command) => {
-            acc[command.code] = this.#generatePath(command);
+            const url = path.join('/', command.code);
+            acc[url] = this.#generatePath(command);
             return acc;
         }, {});
 
@@ -62,8 +63,10 @@ class DocsService extends StaticService {
                 version: '1.0.0',
             },
             host: 'http://localhost:3000',
-            basePath: '/api',
             schemes: ['http'],
+            servers: [{
+                url: 'http://localhost:3000/api/'
+            }],
             paths,
         };
     }
