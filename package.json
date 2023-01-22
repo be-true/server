@@ -1,18 +1,18 @@
 {
   "name": "@be-true",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "Be-true stack",
   "author": "eawapownikov@gmail.com",
   "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "test": "npm run test -ws"
+  },
   "devDependencies": {
     "metatests": "^0.8.2",
     "prettier": "2.8.3",
     "ts-node": "^10.9.1"
-  },
-  "scripts": {
-    "test": "npm run test -ws"
   }
 }

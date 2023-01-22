@@ -1,6 +1,6 @@
 {
   "name": "@be-true/utils",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Набор вспомогательных функций",
   "main": "index.js",
   "types": "types/types.d.ts",

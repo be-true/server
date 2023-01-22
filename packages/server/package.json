@@ -1,6 +1,6 @@
 {
   "name": "@be-true/server",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Server for applications",
   "main": "index.js",
   "directories": {
@@ -25,7 +25,7 @@
     "metatests": "^0.8.2"
   },
   "dependencies": {
-    "@be-true/config": "^0.2.0",
-    "@be-true/utils": "^0.2.0"
+    "@be-true/config": "^0.3.0",
+    "@be-true/utils": "^0.3.0"
   }
 }
