@@ -6,7 +6,11 @@ class TransportEcho {
     }
 
     async command(code, params, options) {
-        return params;
+        return {
+            code: 200,
+            status: 'Success',
+            result: params
+        };
     }
 }
 
