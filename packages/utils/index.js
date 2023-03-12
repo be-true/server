@@ -7,4 +7,7 @@ module.exports = {
     fileExist: require('./functions/fileExist').fileExist,
     fileHash: require('./functions/fileHash').fileHash,
     filesInPath: require('./functions/filesInPath').filesInPath,
+    toArray: require('./functions/array/toArray').toArray,
+    toMap: require('./functions/array/toMap').toMap,
+    toMapGroup: require('./functions/array/toMapGroup').toMapGroup,
 }

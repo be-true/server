@@ -11,7 +11,7 @@ const get = async () => {
     return fsp.readFile(fileResultEnd, 'utf8');
 }
 
-metatests.testAsync("Client: resetterCommand()", async (test) => {
+metatests.testAsync("replaceInFile()", async (test) => {
     await reset()
     await replaceInFile(fileResultEnd, '[envs]: start', '[envs]: end', `\n${'tested replace text'}\n`)
 
