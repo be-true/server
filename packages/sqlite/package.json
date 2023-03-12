@@ -1,0 +1,30 @@
+{
+  "name": "@be-true/sqlite",
+  "version": "0.3.0",
+  "description": "SQL wrapper service for sqlite library",
+  "main": "index.js",
+  "scripts": {
+    "test": "metatests tests --dependentSubtests=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/be-true/server.git",
+    "directory": "packages/sqlite"
+  },
+  "keywords": [
+    "sqlite",
+    "@be-true/server"
+  ],
+  "author": "eawapownikov@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/be-true/server/issues"
+  },
+  "homepage": "https://github.com/be-true/server/blob/master/packages/sqlite/README.md",
+  "dependencies": {
+    "@be-true/config": "^0.3.0",
+    "@be-true/utils": "^0.3.0",
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.4"
+  }
+}

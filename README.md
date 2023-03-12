@@ -1,5 +1,9 @@
 # @be-true
 
+# TODO
+- Система конфигурации. 
+    - Добавить проверку asFile
+
 ## Документация
 - [Библиотека конфигурации](./packages/config/README.md)
 - [Сервер приложения](./packages/server/README.md)
