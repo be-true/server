@@ -24,7 +24,10 @@ class AdapterWSService {
                 const data = JSON.parse(buffer.toString())
                 const { command, params, headers = {} } = data;
                 const response = await this._app.handleCommand(command, params, headers);
-                ws.send(JSON.stringify(response.toJSON()));
+                ws.send(JSON.stringify({
+                    response: response.toJSON(),
+                    headers: response.getHeaders(),
+                }));
             });
         });
 

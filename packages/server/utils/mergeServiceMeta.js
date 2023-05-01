@@ -16,7 +16,7 @@ function mergeServiceMeta(defaulted = {}, meta = {}, override = {}) {
         };
     }
 
-    const config = Config.from(meta.config).merge(override.config);
+    const config = Config.from(mergedMeta.config).merge(override.config);
     return Object.assign({}, defaulted, mergedMeta, { config });
 }
 
